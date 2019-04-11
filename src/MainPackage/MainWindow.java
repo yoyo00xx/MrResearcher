@@ -51,13 +51,13 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     DefaultTableModel dm; 
     private void createColumns(){
         dm = (DefaultTableModel) jTable1.getModel();
-        String[] columns = {"#", "Author", "Title","Category","Year","Date Added","Rating","Keywords"};
+        String[] columns = {"#","EntryType" ,"Author", "Title","Category","Year","Date Added","Rating","Keywords"};
         for(String column : columns){
             dm.addColumn(column);
         }
-        jTable1.getColumnModel().getColumn(7).setMinWidth(0);
-        jTable1.getColumnModel().getColumn(7).setMaxWidth(0);
-        jTable1.getColumnModel().getColumn(7).setWidth(0);
+        jTable1.getColumnModel().getColumn(8).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(8).setWidth(0);
     
     }
 	public MainWindow() {
@@ -201,14 +201,6 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                     saveValidPapers();
                 }   // end filesDropped
             });
-
-            jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
-                },
-                new String [] {
-                    "#", "Author", "Title","Category","Year","Date Added","Rating"
-                }
-            ));
             jScrollPane2.setViewportView(jTable1);
 
             jMenu2.setText("File");
