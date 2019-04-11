@@ -2,6 +2,8 @@ package MainPackage;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PapersManager implements Serializable {
 
@@ -12,8 +14,9 @@ public class PapersManager implements Serializable {
         PapersManager p = new PapersManager();
         p.load();
         Paper paper = new Paper();
-        paper.setAuthor("hahahahahaha");
-
+        paper.setAuthor("Saud Only");
+        paper.getNotes().add(new Note());
+        paper.getNotes().add(new Note());
         p.papers.add(paper);
         p.save();
     }
@@ -26,52 +29,75 @@ public class PapersManager implements Serializable {
         return null;
     }
 
-    public void giveRating(double rate) {
-
+    public void giveRating(Paper paper, double rate) {
+        paper.setRating(rate);
     }
 
     public void addPaper(Paper paper) {
+        papers.add(paper);
+    }
+
+    public void addNote(Paper paper, Note note) {
+        paper.getNotes().add(note);
+    }
+
+    public void editNote(Paper paper, Note note) {
 
     }
 
-    public void addNote(Note note) {
-
-    }
-
-    public void editNote(Note note) {
-
-    }
-
-    public void deleteNote(Note note) {
+    public void deleteNote(Paper paper, Note note) {
 
     }
 
     public void deletePaper(Paper paper) {
-
+        papers.remove(paper);
     }
 
     public void save() {
         //   "src/Papers/"
-        try (FileOutputStream fout = new FileOutputStream("src/Papers/database.db");) {
-            ObjectOutputStream oos = new ObjectOutputStream(fout);
-            oos.writeObject(this);
-        } catch (Exception e) {
-            System.out.println("Couldn't save the class");
-            e.printStackTrace();
-        }
-    }
-
-    public void load() {
+        FileOutputStream fout = null;
         try {
-            FileInputStream streamIn = new FileInputStream("src/Papers/database.db");
-            ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
-            PapersManager tmp = (PapersManager) objectinputstream.readObject();
-            papers.addAll(tmp.papers);
-            System.out.println(papers.toString());
+            fout = new FileOutputStream("src/Papers/database.db");
+            ObjectOutputStream oos = new ObjectOutputStream(fout);
+            oos.writeObject(papers);
         } catch (Exception e) {
-            System.out.println("Couldn't load the class");
-
-            // e.printStackTrace();
+            System.out.println("Couldn't save the papers");
+            e.printStackTrace();
+        } finally {
+            if (fout != null) {
+                try {
+                    fout.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(PapersManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public void load() {
+        ObjectInputStream ois = null;
+        try {
+            RandomAccessFile raf = new RandomAccessFile("src/Papers/database.db", "rw");
+            FileInputStream fos = new FileInputStream(raf.getFD());
+            ois = new ObjectInputStream(fos);
+
+            papers.addAll(((ArrayList<Paper>) ois.readObject()));
+            System.out.println(papers.toString());
+        } catch (IOException ex) {
+            //Logger.getLogger(PapersManager.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("There was no file to load.");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PapersManager.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ois != null) {
+                try {
+                    ois.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(PapersManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
 }

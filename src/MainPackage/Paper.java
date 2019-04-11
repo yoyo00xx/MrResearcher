@@ -2,18 +2,33 @@ package MainPackage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class Paper implements Serializable {
 
-    private String name;
-    private ArrayList<Note> notes;
+    private String title;
+    private ArrayList<Note> notes = new ArrayList<>();
     private double rating;
     private String author;
     private String date;
-    private String keywords;
+    private HashSet<String> keywords = new HashSet<>();
+
+    public Paper() {
+    }
+
+    public Paper(String title, double rating, String author, String date) {
+        this.title = title;
+        this.rating = rating;
+        this.author = author;
+        this.date = date;
+        addKeywords(title);
+        addKeywords(author);
+
+    }
 
     public static void main(String[] args) {
-        System.out.println("Fuck off");
+        //  System.out.println("Fuck off");
 
     }
 
@@ -33,20 +48,30 @@ public class Paper implements Serializable {
         this.date = date;
     }
 
-    public String getKeywords() {
+    public HashSet getKeywords() {
         return keywords;
     }
 
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
+    public void removeKeywords(String words) {
+        Scanner sc = new Scanner(words);
+        while (sc.hasNext()) {
+            keywords.remove(sc.next());
+        }
     }
 
-    public String getName() {
-        return name;
+    public void addKeywords(String words) {
+        Scanner sc = new Scanner(words);
+        while (sc.hasNext()) {
+            keywords.add(sc.next());
+        }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public ArrayList<Note> getNotes() {
@@ -67,8 +92,10 @@ public class Paper implements Serializable {
 
     @Override
     public String toString() {
-
-        return "written by " + author;
+        if (notes == null) {
+            notes = new ArrayList<>();
+        }
+        return " " + author + " no of notes = " + notes.size();
 
     }
 

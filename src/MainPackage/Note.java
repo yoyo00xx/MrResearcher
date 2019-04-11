@@ -1,18 +1,41 @@
 package MainPackage;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Scanner;
 
 public class Note implements Serializable {
 
     private String title;
     private String category;
     private String content;
+    private HashSet<String> keywords = new HashSet<>();
 
-    public ArrayList<String> getKeywords() {
-        // TODO Auto-generated method stub
+    public Note() {
+    }
 
-        return null;
+    public Note(String title, String category, String content) {
+        this.title = title;
+        this.category = category;
+        this.content = content;
+    }
+
+    public HashSet getKeywords() {
+        return keywords;
+    }
+
+    public void removeKeywords(String words) {
+        Scanner sc = new Scanner(words);
+        while (sc.hasNext()) {
+            keywords.remove(sc.next());
+        }
+    }
+
+    public void addKeywords(String words) {
+        Scanner sc = new Scanner(words);
+        while (sc.hasNext()) {
+            keywords.add(sc.next());
+        }
     }
 
     public String getTitle() {
