@@ -7,49 +7,49 @@ import java.util.logging.Logger;
 
 public class PapersManager implements Serializable {
 
-    private static ArrayList<Paper> papers = new ArrayList<>();
+    private ArrayList<Paper> papers = new ArrayList<>();
 
     public static void main(String[] args) {
 
-//       PapersManager p = new PapersManager();
-//        p.load();
-//        Paper paper = new Paper();
-//        paper.setAuthor("Saud Only");
-//        paper.getNotes().add(new Note());
-//        paper.getNotes().add(new Note());
-//        p.papers.add(paper);
-//        p.save();
+        PapersManager p = new PapersManager();
+        p.load();
+        Paper paper = new Paper();
+        paper.setAuthor("Saud Only");
+        paper.getNotes().add(new Note());
+        paper.getNotes().add(new Note());
+        p.papers.add(paper);
+        p.save();
     }
 
-    public static Note searchNotes(String keyWords) {
+    public Note searchNotes(String keyWords) {
         return null;
     }
 
-    public static Paper searchPaper(String keyWords) {
+    public Paper searchPaper(String keyWords) {
         return null;
     }
 
-    public static void giveRating(Paper paper, double rate) {
+    public void giveRating(Paper paper, double rate) {
         paper.setRating(rate);
     }
 
-    public static void addPaper(Paper paper) {
+    public void addPaper(Paper paper) {
         papers.add(paper);
     }
 
-    public static void addNote(Paper paper, Note note) {
+    public void addNote(Paper paper, Note note) {
         paper.getNotes().add(note);
     }
 
-    public static void editNote(Paper paper, Note note) {
+    public void editNote(Paper paper, Note note) {
 
     }
 
-    public static void deleteNote(Paper paper, Note note) {
+    public void deleteNote(Paper paper, Note note) {
 
     }
 
-    public static void deletePaper(Paper paper) {
+    public void deletePaper(Paper paper) {
         papers.remove(paper);
     }
 
@@ -64,7 +64,6 @@ public class PapersManager implements Serializable {
             fout = new FileOutputStream("src/Papers/database.db");
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(papers);
-            System.out.println("save was successful");
         } catch (Exception e) {
             System.out.println("Couldn't save the papers");
             e.printStackTrace();
@@ -77,20 +76,18 @@ public class PapersManager implements Serializable {
                 }
             }
         }
-
     }
 
     @SuppressWarnings("unchecked")
-    public static void load() {
+    public void load() {
         ObjectInputStream ois = null;
         try {
-            RandomAccessFile raf = new RandomAccessFile("src/Papers/database.db", "r");
+            RandomAccessFile raf = new RandomAccessFile("src/Papers/database.db", "rw");
             FileInputStream fos = new FileInputStream(raf.getFD());
             ois = new ObjectInputStream(fos);
 
             papers.addAll(((ArrayList<Paper>) ois.readObject()));
             System.out.println(papers.toString());
-            System.out.println("load was successful");
         } catch (IOException ex) {
             //Logger.getLogger(PapersManager.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("There was no file to load.");

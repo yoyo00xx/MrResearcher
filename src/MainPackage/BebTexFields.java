@@ -69,69 +69,37 @@ public class BebTexFields extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tvTittle.setText("jTextField1");
-
         jLabel2.setText("Title*");
 
         jLabel3.setText("Publisher*");
 
-        tvPublisher.setText("jTextField1");
-
         jLabel4.setText("Year*");
-
-        tvYear.setText("jTextField1");
-
-        tvEntryType.setText("jTextField1");
 
         jLabel5.setText("Edition");
 
-        tvEdition.setText("jTextField1");
-
         jLabel6.setText("Entrytype*");
-
-        tvEditor.setText("jTextField1");
-
-        tvAuthor.setText("jTextField1");
 
         jLabel7.setText("Author*");
 
         jLabel8.setText("Editor*");
 
-        jTextField12.setText("jTextField1");
-
         jLabel11.setText("Publisher");
 
-        jTextField18.setText("jTextField1");
-
-        jLabel17.setText("Annote");
-
-        jTextField22.setText("jTextField1");
+        jLabel17.setText("Keywords");
 
         jLabel21.setText("Address");
 
-        jTextField23.setText("jTextField1");
-
         jLabel23.setText("Crossref");
-
-        jTextField24.setText("jTextField1");
-
-        jTextField25.setText("jTextField1");
 
         jLabel24.setText("Journal");
 
         jLabel25.setText("Institution");
 
-        tvVolume.setText("jTextField1");
-
         jLabel27.setText("Volume");
 
         jLabel28.setText("Series");
 
-        jTextField28.setText("jTextField1");
-
         jLabel29.setText("Chapter");
-
-        jTextField29.setText("jTextField1");
 
         jButton1.setText("Apply Changes");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,11 +186,11 @@ public class BebTexFields extends javax.swing.JFrame {
                         .addComponent(jLabel27)
                         .addGap(18, 18, 18)
                         .addComponent(tvVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(245, 245, 245))
+                .addGap(257, 257, 257))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -295,7 +263,7 @@ public class BebTexFields extends javax.swing.JFrame {
                             .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

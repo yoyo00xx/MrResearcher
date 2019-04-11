@@ -21,8 +21,12 @@ public class PaperBuilder {
 
     }
 
-    public static Paper getTmp() {
+    public Paper getTmp() {
         return tmp;
+    }
+
+    public void setTmp(Paper tmp) {
+        this.tmp = tmp;
     }
 
     public static File getFile() {
@@ -106,4 +110,5 @@ public class PaperBuilder {
         }
 
     }
-}
+
+
