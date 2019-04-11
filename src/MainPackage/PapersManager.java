@@ -53,7 +53,11 @@ public class PapersManager implements Serializable {
         papers.remove(paper);
     }
 
-    public void save() {
+    public static ArrayList<Paper> getPapers() {
+        return papers;
+    }
+
+    public static void save() {
         //   "src/Papers/"
         FileOutputStream fout = null;
         try {

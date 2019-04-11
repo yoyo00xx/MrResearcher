@@ -53,7 +53,8 @@ public class PaperBuilder {
             RenameFile();
             saveFile();
         }
-        // TODO  COMPLETE GENERATION OF PAPER OBJECT
+        tmp = new Paper();
+        tmp.setTitle(newFileName);
         return tmp;
     }
 

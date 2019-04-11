@@ -423,6 +423,12 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 
+    private void updateList() {
+        for (Paper p : PapersManager.getPapers()) {
+            System.out.println(p.toString());
+        }
+    }
+
     @Override
     public void keyTyped(KeyEvent arg0) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
