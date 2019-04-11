@@ -65,6 +65,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 		         
 		initComponents();
 		initializeIcon();
+                createColumns();
 	}
         private void search(String query){
             TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(dm);
