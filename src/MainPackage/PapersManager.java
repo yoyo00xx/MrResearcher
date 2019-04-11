@@ -1,3 +1,5 @@
+package MainPackage;
+
 import java.util.*;
 
 public class PapersManager {

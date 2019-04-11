@@ -1,3 +1,4 @@
+package MainPackage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,19 +8,51 @@ public class PaperBuilder {
 	private Paper tmp;
 	private static  File file;
 	final static String PAPERS_DIRECTORY="src/Papers/";
-        private static String newFileName = "gogogaga2";
+        private static String newFileName;
 	
 	public static void main(String[] args) {
 		
          file = new File(PAPERS_DIRECTORY+"gogo.pdf");
-         saveFile();
+           
     
             
+    }
+
+    public Paper getTmp() {
+        return tmp;
+    }
+
+    public void setTmp(Paper tmp) {
+        this.tmp = tmp;
+    }
+
+    public static File getFile() {
+        return file;
+    }
+
+    public static void setFile(File file) {
+        PaperBuilder.file = new File(file.getAbsolutePath());
+    }
+
+    public static String getNewFileName() {
+        return newFileName;
+    }
+
+    public static void setNewFileName(String newFileName) {
+        PaperBuilder.newFileName = newFileName;
     }
 	
 	
 
-	public Paper buildPaper(File file) {
+	public  Paper buildPaper(String pathname) {
+           
+            System.out.println("MainPackage.PaperBuilder.buildPaper(): file:"+file.exists());
+           this.file = new File(pathname);
+            if(verifyFile(file)){
+            RenameFile();
+            saveFile();
+            }
+            // TODO  COMPLETE GENERATION OF PAPER OBJECT
 		return tmp;
 	}
 
@@ -52,11 +85,14 @@ public class PaperBuilder {
 
 	private static void saveFile() {
             
+            if(newFileName.lastIndexOf(".") ==-1){
+            newFileName = newFileName.concat(".pdf");
+            }
             
                 try {
             FileInputStream fs = new FileInputStream(file.getAbsolutePath());
            
-            FileOutputStream os = new FileOutputStream(PAPERS_DIRECTORY+newFileName+".pdf");
+            FileOutputStream os = new FileOutputStream(PAPERS_DIRECTORY+newFileName);
             int b;
             while ((b = fs.read()) != -1) {
             os.write(b);
