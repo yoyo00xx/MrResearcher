@@ -18,11 +18,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.File;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import net.iharder.dnd.FileDrop;
 
 /**
  *
@@ -33,11 +37,36 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	/**
 	 * Creates new form gameWindow
 	 */
+    public static PaperBuilder paperBuilder;
+    java.io.File[] files;
+         
 	public MainWindow() {
-		
+            
+		         
 		initComponents();
 		initializeIcon();
 	}
+        public void saveValidPapers(File[] files){
+        
+        
+                  for(File file : files){
+                File realfile = new File(file.getAbsolutePath());
+                System.out.println(realfile.getAbsoluteFile()+" file exist="+realfile.exists());
+                paperBuilder.setFile(realfile);
+                String pathname = realfile.getAbsolutePath();
+                System.out.println(paperBuilder.getFile().exists());
+                System.out.println("Enter File Name");
+                Scanner myKeyb = new Scanner(System.in);
+                String fileName ="xzczxc";// myKeyb.nextLine();
+                paperBuilder.setNewFileName( fileName);
+                paperBuilder.setFile(realfile);
+                paperBuilder.buildPaper(pathname);
+            }
+         
+        
+            
+
+        }
 	private void initializeIcon(){
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("cube1.png")));
 	}
@@ -86,15 +115,22 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             .addGap(0, 41, Short.MAX_VALUE)
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-            },
-            new String [] {
-                "#", "Author", "Title","Category","Year","Date Added","Rating"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        new  FileDrop( jScrollPane2, new FileDrop.Listener()
+            {   public void  filesDropped( java.io.File[] files )
+                {
+                    // handle file drop
+                    saveValidPapers(files);
+                }   // end filesDropped
+            });
 
+            jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object [][] {
+                },
+                new String [] {
+                    "#", "Author", "Title","Category","Year","Date Added","Rating"
+                }
+            ));
+            jScrollPane2.setViewportView(jTable1);
         jMenu2.setText("File");
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
@@ -114,85 +150,88 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
         jMenuBar1.add(jMenu2);
 
-        jMenu1.setText("Themes");
+            jMenu2.setText("File");
+            jMenuBar1.add(jMenu2);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Operating_System_32px_2.png"))); // NOI18N
-        jMenuItem4.setText("Operating System");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem4);
+            jMenu1.setText("Themes");
 
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Java_32px.png"))); // NOI18N
-        jMenuItem5.setText("Java");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem5);
+            jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Operating_System_32px_2.png"))); // NOI18N
+            jMenuItem4.setText("Operating System");
+            jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem4ActionPerformed(evt);
+                }
+            });
+            jMenu1.add(jMenuItem4);
 
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Settings_Backup_Restore_32px.png"))); // NOI18N
-        jMenuItem7.setText("Restore Default");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem7);
+            jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Java_32px.png"))); // NOI18N
+            jMenuItem5.setText("Java");
+            jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem5ActionPerformed(evt);
+                }
+            });
+            jMenu1.add(jMenuItem5);
 
-        jMenuBar1.add(jMenu1);
+            jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Settings_Backup_Restore_32px.png"))); // NOI18N
+            jMenuItem7.setText("Restore Default");
+            jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem7ActionPerformed(evt);
+                }
+            });
+            jMenu1.add(jMenuItem7);
 
-        jMenu3.setText("Help");
+            jMenuBar1.add(jMenu1);
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Help_32px.png"))); // NOI18N
-        jMenuItem1.setText("Help Contents");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem1);
+            jMenu3.setText("Help");
 
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_About_32px_1.png"))); // NOI18N
-        jMenuItem8.setText("About");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem8);
+            jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Help_32px.png"))); // NOI18N
+            jMenuItem1.setText("Help Contents");
+            jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem1ActionPerformed(evt);
+                }
+            });
+            jMenu3.add(jMenuItem1);
 
-        jMenuBar1.add(jMenu3);
+            jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_About_32px_1.png"))); // NOI18N
+            jMenuItem8.setText("About");
+            jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem8ActionPerformed(evt);
+                }
+            });
+            jMenu3.add(jMenuItem8);
 
-        setJMenuBar(jMenuBar1);
+            jMenuBar1.add(jMenu3);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
-                .addContainerGap())
-        );
+            setJMenuBar(jMenuBar1);
 
-        getAccessibleContext().setAccessibleDescription("");
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane2)
+                    .addContainerGap())
+            );
 
-        pack();
-        setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+            getAccessibleContext().setAccessibleDescription("");
+
+            pack();
+            setLocationRelativeTo(null);
+        }// </editor-fold>//GEN-END:initComponents
 
 	private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 		HelpWindow x = new HelpWindow();
@@ -246,6 +285,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
+            paperBuilder = new PaperBuilder();
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

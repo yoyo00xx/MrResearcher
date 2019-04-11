@@ -1,3 +1,5 @@
+package MainPackage;
+
 public class GUI {
 
 	private PaperBuilder paperBuilder;
