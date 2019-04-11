@@ -6,6 +6,10 @@
 package MainPackage;
 
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.PrintWriter;
+import java.nio.file.StandardOpenOption;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -18,7 +22,7 @@ public class SaveWindow extends javax.swing.JFrame {
      */
     public SaveWindow() {
         initComponents();
-        initializeIcon();
+        initializeIcon(); 
     }
 
     /**
@@ -40,18 +44,18 @@ public class SaveWindow extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Colonna MT", 0, 36)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Save_48px.png"))); // NOI18N
         jButton1.setText("Save");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
         jButton2.setFont(new java.awt.Font("Colonna MT", 0, 36)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_File_Delete_48px.png"))); // NOI18N
         jButton2.setText("Discard");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -80,19 +84,26 @@ public class SaveWindow extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        System.out.println("MainPackage.SaveWindow.jButton1MouseClicked()" + evt.getButton());
-        PapersManager.save();        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_jButton1MouseClicked
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handlin PapersManager.save();g code here:
-        System.out.println("MainPackage.SaveWindow.jButton1MouseClicked()" + evt.getButton());
-
-        PapersManager.load();
+        JFileChooser chooser = new JFileChooser();
+        chooser.showSaveDialog(null);
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  
+        String path = chooser.getSelectedFile().getAbsolutePath();
+//        file.flush();
+//        file.close();
         System.exit(0);
-    }//GEN-LAST:event_jButton2MouseClicked
+      
+        
+
+       
+        
+    
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -101,7 +112,7 @@ public class SaveWindow extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -129,8 +140,7 @@ public class SaveWindow extends javax.swing.JFrame {
             }
         });
     }
-
-    private void initializeIcon() {
+    private void initializeIcon(){
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("icons8_Save_48px.png")));
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
