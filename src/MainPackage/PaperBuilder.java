@@ -52,8 +52,7 @@ public class PaperBuilder {
 
 	public static Paper buildPaper(File exportedFille) {
            tmp  = null;
-            System.out.println("MainPackage.PaperBuilder.buildPaper(): file:"+file.exists());
-           file =exportedFille;
+           setFile(exportedFille);
             if(verifyFile(file)){
             RenameFile();
             saveFile();
@@ -71,13 +70,11 @@ public class PaperBuilder {
             if (file != null /*&& file.exists()*/) {
                 String name = file.getName();
                 extension = name.substring(name.lastIndexOf("."));
-                System.out.println("HERE");
             }
         } catch (Exception e) {
             extension = "";
         }
 
-        System.out.println("Extension is : " + extension);
         if (extension.equals(".pdf")) {
             return true;
 
@@ -110,7 +107,9 @@ public class PaperBuilder {
 //        }
                     Path path = Paths.get(PAPERS_DIRECTORY+newFileName);
             try {
+                System.out.println("MainPackage.PaperBuilder.saveFile() FILEPATH IS "+file.getAbsolutePath());
                 Files.copy(file.toPath(), path);
+                
             } catch (IOException ex) {
                 Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -180,7 +180,7 @@
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JScrollPane()"/>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="new  FileDrop(  System.out,jScrollPane2, new FileDrop.Listener()&#xa;      {   public void  filesDropped(java.io.File[] files )&#xa;          {   &#xa;              // handle file drop&#xa;              saveValidPapers(files);&#xa;          }   // end filesDropped&#xa;      });"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="new  FileDrop(  System.out,jScrollPane2, new FileDrop.Listener()&#xa;      {   public void  filesDropped(java.io.File[] addedFiles )&#xa;          {   &#xa;              // handle file drop&#xa;              files = addedFiles;&#xa;              saveValidPapers();&#xa;          }   // end filesDropped&#xa;      });"/>
         <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
       </AuxValues>
 
