@@ -21,24 +21,30 @@ import java.util.logging.Logger;
 import java.io.File;
 import java.util.Scanner;
 import java.awt.Desktop;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import net.iharder.dnd.FileDrop;
+
 
 /**
  *
  * @author BalaH-RiG
  */
 
-public class MainWindow extends javax.swing.JFrame implements KeyListener, FocusListener{
+public class MainWindow extends javax.swing.JFrame implements KeyListener, FocusListener , ActionListener{
 	/**
 	 * Creates new form gameWindow
 	 */
+     ArrayList<BebTexFields> bibFields = new ArrayList<BebTexFields>();
     public static PaperBuilder paperBuilder;
-    java.io.File[] files;
+    public File[] files;
+    public static int fileIndexCnt;
          
 	public MainWindow() {
             
@@ -46,24 +52,33 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 		initComponents();
 		initializeIcon();
 	}
-        public void saveValidPapers(File[] files){
-        
-        int i=0;
+        public void saveValidPapers(){
+                if(files.length >1){
+                    JOptionPane.showMessageDialog( this, "Error, PLease Enter 1 File");
+                    return;
+                }
+            new Runnable() {
+                @Override
+                public void run() {
+                   
+               fileIndexCnt=0;
                   for(File file : files){
-                        
-                System.out.println(file.getAbsoluteFile()+" file exist="+file.exists());
-              
-                String pathname = file.getAbsolutePath();
-               
-                System.out.println("Enter File Name");
-                Scanner myKeyb = new Scanner(System.in);
-                String fileName = "dfdsfsdf"+i;//myKeyb.nextLine();
-                PaperBuilder.setNewFileName( fileName);
-                PaperBuilder.setFile(file);
+                bibFields.add(fileIndexCnt, new BebTexFields());
+                bibFields.get(fileIndexCnt).setVisible(true);
+                bibFields.get(fileIndexCnt).getJButton().addActionListener(new BibTexButtonListener());
+                bibFields.get(fileIndexCnt).getTvTittle().setText(file.getName());
+                bibFields.get(fileIndexCnt).setTitle(file.getName());
+
                 
-                PaperBuilder.buildPaper(file);
-                i++;
+
+                PaperBuilder.setFile(file);
+                System.out.println(file.getAbsoluteFile()+" file exist="+file.exists()); 
+                  
+
             }
+                }
+            }.run();
+        
          
         
             
@@ -72,6 +87,23 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	private void initializeIcon(){
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("cube1.png")));
 	}
+        
+        class BibTexButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+                
+                System.out.println("MainPackage.MainWindow.BibTexButtonListener.actionPerformed() Save Button Clicked");
+               
+                PaperBuilder.setFile(files[fileIndexCnt]);
+                PaperBuilder.setNewFileName(bibFields.get(fileIndexCnt).getTvTittle().getText());
+                    PaperBuilder.buildPaper(files[fileIndexCnt]);
+                    bibFields.get(fileIndexCnt).dispose();
+                    fileIndexCnt++;
+        
+        }
+        
+        }
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,10 +150,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         );
 
         new  FileDrop(  System.out,jScrollPane2, new FileDrop.Listener()
-            {   public void  filesDropped(java.io.File[] files )
+            {   public void  filesDropped(java.io.File[] addedFiles )
                 {
                     // handle file drop
-                    saveValidPapers(files);
+                    files = addedFiles;
+                    saveValidPapers();
                 }   // end filesDropped
             });
 
@@ -133,26 +166,24 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                 }
             ));
             jScrollPane2.setViewportView(jTable1);
-        jMenu2.setText("File");
-
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/database.png"))); // NOI18N
-        jMenuItem2.setText("Load Database");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
-
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/save.png"))); // NOI18N
-        jMenuItem3.setText("Save Database");
-        jMenu2.add(jMenuItem3);
-
-        jMenuBar1.add(jMenu2);
 
             jMenu2.setText("File");
+
+            jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+            jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/database.png"))); // NOI18N
+            jMenuItem2.setText("Load Database");
+            jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem2ActionPerformed(evt);
+                }
+            });
+            jMenu2.add(jMenuItem2);
+
+            jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+            jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/save.png"))); // NOI18N
+            jMenuItem3.setText("Save Database");
+            jMenu2.add(jMenuItem3);
+
             jMenuBar1.add(jMenu2);
 
             jMenu1.setText("Themes");
@@ -244,7 +275,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
 	//Listeners
 
-
+           
 
 	private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
 		if(true)
@@ -287,7 +318,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
-            paperBuilder = new PaperBuilder();
+             fileIndexCnt=0;
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -369,6 +400,12 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     public void focusLost(FocusEvent arg0) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+          
+    }
+    
 
 }
 
