@@ -86,10 +86,8 @@ public class SaveWindow extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        JFileChooser chooser = new JFileChooser();
-        chooser.showSaveDialog(null);
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);  
-        String path = chooser.getSelectedFile().getAbsolutePath();
+       PapersManager.save();
+       
 //        file.flush();
 //        file.close();
         System.exit(0);
@@ -102,9 +100,17 @@ public class SaveWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
+    public void deletePaper(int index){
+    PapersManager.papers.remove(index);
+        
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
