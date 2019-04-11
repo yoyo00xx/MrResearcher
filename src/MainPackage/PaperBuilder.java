@@ -2,10 +2,16 @@ package MainPackage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class PaperBuilder {
-	private Paper tmp;
+	private static Paper tmp;
 	private static  File file;
 	final static String PAPERS_DIRECTORY="src/Papers/";
         private static String newFileName;
@@ -44,10 +50,10 @@ public class PaperBuilder {
 	
 	
 
-	public  Paper buildPaper(String pathname) {
-           
+	public static Paper buildPaper(File exportedFille) {
+           tmp  = null;
             System.out.println("MainPackage.PaperBuilder.buildPaper(): file:"+file.exists());
-           this.file = new File(pathname);
+           file =exportedFille;
             if(verifyFile(file)){
             RenameFile();
             saveFile();
@@ -79,29 +85,35 @@ public class PaperBuilder {
 		return false;
 	}
 
-	private void RenameFile() {
-
+	private static void RenameFile() {
+                    
 	}
 
-	private static void saveFile() {
+	public static void saveFile() {
             
             if(newFileName.lastIndexOf(".") ==-1){
             newFileName = newFileName.concat(".pdf");
             }
             
-                try {
-            FileInputStream fs = new FileInputStream(file.getAbsolutePath());
-           
-            FileOutputStream os = new FileOutputStream(PAPERS_DIRECTORY+newFileName);
-            int b;
-            while ((b = fs.read()) != -1) {
-            os.write(b);
+//                try {
+//            FileInputStream fs = new FileInputStream(file.getAbsolutePath());
+//           
+//            FileOutputStream os = new FileOutputStream(PAPERS_DIRECTORY+newFileName);
+//            int b;
+//            while ((b = fs.read()) != -1) {
+//            os.write(b);
+//            }
+//            os.close();
+//            fs.close();
+//        } catch (Exception E) {
+//            E.printStackTrace();
+//        }
+                    Path path = Paths.get(PAPERS_DIRECTORY+newFileName);
+            try {
+                Files.copy(file.toPath(), path);
+            } catch (IOException ex) {
+                Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
             }
-            os.close();
-            fs.close();
-        } catch (Exception E) {
-            E.printStackTrace();
-        }
                 
 	}
 

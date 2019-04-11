@@ -20,7 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.io.File;
 import java.util.Scanner;
-
+import java.awt.Desktop;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -48,19 +48,21 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	}
         public void saveValidPapers(File[] files){
         
-        
+        int i=0;
                   for(File file : files){
-                File realfile = new File(file.getAbsolutePath());
-                System.out.println(realfile.getAbsoluteFile()+" file exist="+realfile.exists());
-                paperBuilder.setFile(realfile);
-                String pathname = realfile.getAbsolutePath();
-                System.out.println(paperBuilder.getFile().exists());
+                        
+                System.out.println(file.getAbsoluteFile()+" file exist="+file.exists());
+              
+                String pathname = file.getAbsolutePath();
+               
                 System.out.println("Enter File Name");
                 Scanner myKeyb = new Scanner(System.in);
-                String fileName ="xzczxc";// myKeyb.nextLine();
-                paperBuilder.setNewFileName( fileName);
-                paperBuilder.setFile(realfile);
-                paperBuilder.buildPaper(pathname);
+                String fileName = "dfdsfsdf"+i;//myKeyb.nextLine();
+                PaperBuilder.setNewFileName( fileName);
+                PaperBuilder.setFile(file);
+                
+                PaperBuilder.buildPaper(file);
+                i++;
             }
          
         
@@ -113,8 +115,8 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             .addGap(0, 41, Short.MAX_VALUE)
         );
 
-        new  FileDrop( jScrollPane2, new FileDrop.Listener()
-            {   public void  filesDropped( java.io.File[] files )
+        new  FileDrop(  System.out,jScrollPane2, new FileDrop.Listener()
+            {   public void  filesDropped(java.io.File[] files )
                 {
                     // handle file drop
                     saveValidPapers(files);
