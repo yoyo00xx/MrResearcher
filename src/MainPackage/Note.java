@@ -1,39 +1,41 @@
 package MainPackage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Note {
-	private String title;
-	private String category;
-	private String content;
+public class Note implements Serializable {
 
-	public ArrayList<String> getKeywords() {
-		// TODO Auto-generated method stub
+    private String title;
+    private String category;
+    private String content;
 
-		return null;
-	}
+    public ArrayList<String> getKeywords() {
+        // TODO Auto-generated method stub
 
-	public String getTitle() {
-		return title;
-	}
+        return null;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getCategory() {
-		return category;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    public String getCategory() {
+        return category;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

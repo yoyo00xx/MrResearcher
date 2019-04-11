@@ -1,8 +1,8 @@
 package MainPackage;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-
 
 public class PaperBuilder {
 	private Paper tmp;
@@ -56,11 +56,11 @@ public class PaperBuilder {
 		return tmp;
 	}
 
-	private static boolean verifyFile(File file) {
-		System.out.println("Verfying File : "+file.getAbsolutePath()+"  "+file.exists());
+    private static boolean verifyFile(File file) {
+        System.out.println("Verfying File : " + file.getAbsolutePath() + "  " + file.exists());
 
-		String extension = "";
-		 
+        String extension = "";
+
         try {
             if (file != null /*&& file.exists()*/) {
                 String name = file.getName();
@@ -70,18 +70,18 @@ public class PaperBuilder {
         } catch (Exception e) {
             extension = "";
         }
-        
-        System.out.println("Extension is : "+extension);
-        if(extension.equals(".pdf")) {
-        	return true;
-		
+
+        System.out.println("Extension is : " + extension);
+        if (extension.equals(".pdf")) {
+            return true;
+
         }
-		return false;
-	}
+        return false;
+    }
 
-	private void RenameFile() {
+    private void RenameFile() {
 
-	}
+    }
 
 	private static void saveFile() {
             
@@ -95,14 +95,14 @@ public class PaperBuilder {
             FileOutputStream os = new FileOutputStream(PAPERS_DIRECTORY+newFileName);
             int b;
             while ((b = fs.read()) != -1) {
-            os.write(b);
+                os.write(b);
             }
             os.close();
             fs.close();
         } catch (Exception E) {
             E.printStackTrace();
         }
-                
-	}
+
+    }
 
 }
