@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class PapersManager implements Serializable {
 
-    private static ArrayList<Paper> papers = new ArrayList<>();
+     static ArrayList<Paper> papers = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -29,7 +29,7 @@ public class PapersManager implements Serializable {
         return null;
     }
 
-    public void giveRating(Paper paper, double rate) {
+    public void giveRating(Paper paper, String rate) {
         paper.setRating(rate);
     }
 
@@ -76,10 +76,11 @@ public class PapersManager implements Serializable {
                 }
             }
         }
+        System.out.println("Saved Sucessfuly");
     }
 
     @SuppressWarnings("unchecked")
-    public void load() {
+    public static void load() {
         ObjectInputStream ois = null;
         try {
             RandomAccessFile raf = new RandomAccessFile("src/Papers/database.db", "rw");

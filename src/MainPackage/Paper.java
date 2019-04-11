@@ -9,19 +9,22 @@ public class Paper implements Serializable {
 
     private String title;
     private ArrayList<Note> notes = new ArrayList<>();
-    private double rating;
+    private String rating;
     private String author;
-    private String date;
+    private String enteryType;
+    private String category;
+    private String year;
+    private String dateAdded;
     private HashSet<String> keywords = new HashSet<>();
 
     public Paper() {
     }
 
-    public Paper(String title, double rating, String author, String date) {
+    public Paper(String title, String rating, String author, String dateAdded) {
         this.title = title;
         this.rating = rating;
         this.author = author;
-        this.date = date;
+        this.dateAdded = dateAdded;
         addKeywords(title);
         addKeywords(author);
 
@@ -41,11 +44,11 @@ public class Paper implements Serializable {
     }
 
     public String getDate() {
-        return date;
+        return dateAdded;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.dateAdded = date;
     }
 
     public HashSet getKeywords() {
@@ -82,12 +85,25 @@ public class Paper implements Serializable {
         this.notes = notes;
     }
 
-    public double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(String rating) {
         this.rating = rating;
+    }
+
+    public String[] getTableArray() {
+        String[] paperArray = new String[8];
+        paperArray[0] = "";
+        paperArray[1] = enteryType;
+        paperArray[2] = author;
+        paperArray[3] = title;
+        paperArray[4] = rating;
+        paperArray[5] = category;
+        paperArray[6] = year;
+        paperArray[7] = dateAdded;
+        return paperArray;
     }
 
     @Override

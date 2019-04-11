@@ -50,16 +50,33 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     }
 	public MainWindow() {
             
-		         
+		
 		initComponents();
 		initializeIcon();
                 createColumns();
+                PapersManager.load();
+                poulateUI();
 	}
         private void search(String query){
             TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(dm);
             jTable1.setRowSorter(sorter);
             sorter.setRowFilter(RowFilter.regexFilter(query));
     }
+         public void poulateUI(){
+        
+            dm = (DefaultTableModel) jTable1.getModel();
+            dm.setRowCount(0);
+            int i=0;
+           for(Paper paper: PapersManager.papers){
+             String[] array = paper.getTableArray();
+             array[0]= i+"";
+            
+          dm.addRow(array);
+           i++;
+           }
+            
+            
+        }
 
     public void saveValidPapers() {
         if (files.length > 1) {
@@ -100,11 +117,13 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
             PaperBuilder.setFile(files[fileIndexCnt]);
             PaperBuilder.setNewFileName(bibFields.get(fileIndexCnt).getTvTittle().getText());
-            PaperBuilder.buildPaper(files[fileIndexCnt]);
+            PapersManager.papers.add(PaperBuilder.buildPaper(files[fileIndexCnt]));
+             poulateUI();
             bibFields.get(fileIndexCnt).dispose();
             fileIndexCnt++;
 
         }
+       
 
     }
 
@@ -203,6 +222,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
             jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/save.png"))); // NOI18N
             jMenuItem3.setText("Save Database");
+            jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem3ActionPerformed(evt);
+                }
+            });
             jMenu2.add(jMenuItem3);
 
             jMenuBar1.add(jMenu2);
@@ -326,7 +350,8 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	}//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+       PapersManager.load();
+       poulateUI();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -337,6 +362,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         String query = jTextField1.getText();
         search(query);
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        PapersManager.save();
+        poulateUI();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
