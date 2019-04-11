@@ -28,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import net.iharder.dnd.FileDrop;
 
+
 /**
  *
  * @author BalaH-RiG
@@ -48,7 +49,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	}
         public void saveValidPapers(File[] files){
         
-        int i=0;
+            new Runnable() {
+                @Override
+                public void run() {
+                int i=0;
+        
                   for(File file : files){
                         
                 System.out.println(file.getAbsoluteFile()+" file exist="+file.exists());
@@ -64,6 +69,9 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                 PaperBuilder.buildPaper(file);
                 i++;
             }
+                }
+            }.run();
+        
          
         
             
@@ -244,7 +252,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
 	//Listeners
 
-
+           
 
 	private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
 		if(true)
