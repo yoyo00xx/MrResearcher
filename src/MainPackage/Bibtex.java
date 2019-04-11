@@ -1,231 +1,231 @@
 package MainPackage;
 
-
 public class Bibtex {
-	private String entryType;
-	private String addres;
-	private String annote;
-	private String author;
-	private String booktitle;
-	private String chapter;
-	private String crossref;
-	private String edition;
-	private String editor;
-	private String howpublished;
-	private String institution;
-	private String journal;
-	private String key;
-	private String month;
-	private String note;
-	private String number;
-	private String org;
-	private String pages;
-	private String publisher;
-	private String school;
-	private String series;
-	private String title;
-	private String type;
-	private String volume;
-	private String year;
 
-	public String getEntryType() {
-		return entryType;
-	}
+    private String entryType;
+    private String addres;
+    private String annote;
+    private String author;
+    private String booktitle;
+    private String chapter;
+    private String crossref;
+    private String edition;
+    private String editor;
+    private String howpublished;
+    private String institution;
+    private String journal;
+    private String key;
+    private String month;
+    private String note;
+    private String number;
+    private String org;
+    private String pages;
+    private String publisher;
+    private String school;
+    private String series;
+    private String title;
+    private String type;
+    private String volume;
+    private String year;
 
-	public void setEntryType(String entryType) {
-		this.entryType = entryType;
-	}
+    public String getEntryType() {
+        return entryType;
+    }
 
-	public String getAddres() {
-		return addres;
-	}
+    public void setEntryType(String entryType) {
+        this.entryType = entryType;
+    }
 
-	public void setAddres(String addres) {
-		this.addres = addres;
-	}
+    public String getAddres() {
+        return addres;
+    }
 
-	public String getAnnote() {
-		return annote;
-	}
+    public void setAddres(String addres) {
+        this.addres = addres;
+    }
 
-	public void setAnnote(String annote) {
-		this.annote = annote;
-	}
+    public String getAnnote() {
+        return annote;
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    public void setAnnote(String annote) {
+        this.annote = annote;
+    }
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+    public String getAuthor() {
+        return author;
+    }
 
-	public String getBooktitle() {
-		return booktitle;
-	}
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-	public void setBooktitle(String booktitle) {
-		this.booktitle = booktitle;
-	}
+    public String getBooktitle() {
+        return booktitle;
+    }
 
-	public String getChapter() {
-		return chapter;
-	}
+    public void setBooktitle(String booktitle) {
+        this.booktitle = booktitle;
+    }
 
-	public void setChapter(String chapter) {
-		this.chapter = chapter;
-	}
+    public String getChapter() {
+        return chapter;
+    }
 
-	public String getCrossref() {
-		return crossref;
-	}
+    public void setChapter(String chapter) {
+        this.chapter = chapter;
+    }
 
-	public void setCrossref(String crossref) {
-		this.crossref = crossref;
-	}
+    public String getCrossref() {
+        return crossref;
+    }
 
-	public String getEdition() {
-		return edition;
-	}
+    public void setCrossref(String crossref) {
+        this.crossref = crossref;
+    }
 
-	public void setEdition(String edition) {
-		this.edition = edition;
-	}
+    public String getEdition() {
+        return edition;
+    }
 
-	public String getEditor() {
-		return editor;
-	}
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
 
-	public void setEditor(String editor) {
-		this.editor = editor;
-	}
+    public String getEditor() {
+        return editor;
+    }
 
-	public String getHowpublished() {
-		return howpublished;
-	}
+    public void setEditor(String editor) {
+        this.editor = editor;
+    }
 
-	public void setHowpublished(String howpublished) {
-		this.howpublished = howpublished;
-	}
+    public String getHowpublished() {
+        return howpublished;
+    }
 
-	public String getInstitution() {
-		return institution;
-	}
+    public void setHowpublished(String howpublished) {
+        this.howpublished = howpublished;
+    }
 
-	public void setInstitution(String institution) {
-		this.institution = institution;
-	}
+    public String getInstitution() {
+        return institution;
+    }
 
-	public String getJournal() {
-		return journal;
-	}
+    public void setInstitution(String institution) {
+        this.institution = institution;
+    }
 
-	public void setJournal(String journal) {
-		this.journal = journal;
-	}
+    public String getJournal() {
+        return journal;
+    }
 
-	public String getKey() {
-		return key;
-	}
+    public void setJournal(String journal) {
+        this.journal = journal;
+    }
 
-	public void setKey(String key) {
-		this.key = key;
-	}
+    public String getKey() {
+        return key;
+    }
 
-	public String getMonth() {
-		return month;
-	}
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-	public void setMonth(String month) {
-		this.month = month;
-	}
+    public String getMonth() {
+        return month;
+    }
 
-	public String getNote() {
-		return note;
-	}
+    public void setMonth(String month) {
+        this.month = month;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public String getNumber() {
-		return number;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setNumber(String number) {
-		this.number = number;
-	}
+    public String getNumber() {
+        return number;
+    }
 
-	public String getOrg() {
-		return org;
-	}
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-	public void setOrg(String org) {
-		this.org = org;
-	}
+    public String getOrg() {
+        return org;
+    }
 
-	public String getPages() {
-		return pages;
-	}
+    public void setOrg(String org) {
+        this.org = org;
+    }
 
-	public void setPages(String pages) {
-		this.pages = pages;
-	}
+    public String getPages() {
+        return pages;
+    }
 
-	public String getPublisher() {
-		return publisher;
-	}
+    public void setPages(String pages) {
+        this.pages = pages;
+    }
 
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
+    public String getPublisher() {
+        return publisher;
+    }
 
-	public String getSchool() {
-		return school;
-	}
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
-	public void setSchool(String school) {
-		this.school = school;
-	}
+    public String getSchool() {
+        return school;
+    }
 
-	public String getSeries() {
-		return series;
-	}
+    public void setSchool(String school) {
+        this.school = school;
+    }
 
-	public void setSeries(String series) {
-		this.series = series;
-	}
+    public String getSeries() {
+        return series;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setSeries(String series) {
+        this.series = series;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public String getVolume() {
-		return volume;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setVolume(String volume) {
-		this.volume = volume;
-	}
+    public String getVolume() {
+        return volume;
+    }
 
-	public String getYear() {
-		return year;
-	}
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
 
-	public void setYear(String year) {
-		this.year = year;
-	}
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
 
 }

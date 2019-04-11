@@ -1,58 +1,44 @@
 package MainPackage;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-
-
-import javax.net.ssl.HttpsURLConnection;
 
 /*
  * This Class gets the bibtex of papers from http://liinwww.ira.uka.de/bibliography/index.html
  */
 public class BibTexParser {
-	
-	
-	
-	
-	
-	
-	// HTTP GET request
-		private void sendGet() throws Exception {
 
-			String url = "http://www.google.com/search?q=mkyong";
-			
-			URL obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+    // HTTP GET request
+    private void sendGet() throws Exception {
 
-			// optional default is GET
-			con.setRequestMethod("GET");
+        String url = "http://www.google.com/search?q=mkyong";
 
-			//add request header
-			
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-			int responseCode = con.getResponseCode();
-			System.out.println("\nSending 'GET' request to URL : " + url);
-			System.out.println("Response Code : " + responseCode);
+        // optional default is GET
+        con.setRequestMethod("GET");
 
-			BufferedReader in = new BufferedReader(
-			        new InputStreamReader(con.getInputStream()));
-			String inputLine;
-			StringBuffer response = new StringBuffer();
+        //add request header
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
 
-			while ((inputLine = in.readLine()) != null) {
-				response.append(inputLine);
-			}
-			in.close();
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
 
-			//print result
-			System.out.println(response.toString());
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
 
-		}
-	
-	
+        //print result
+        System.out.println(response.toString());
+
+    }
 
 }

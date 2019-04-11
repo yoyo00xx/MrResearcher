@@ -21,12 +21,8 @@ public class PaperBuilder {
 
     }
 
-    public Paper getTmp() {
+    public static Paper getTmp() {
         return tmp;
-    }
-
-    public void setTmp(Paper tmp) {
-        this.tmp = tmp;
     }
 
     public static File getFile() {
@@ -53,7 +49,8 @@ public class PaperBuilder {
             RenameFile();
             saveFile();
         }
-        // TODO  COMPLETE GENERATION OF PAPER OBJECT
+        tmp = new Paper();
+        tmp.setAuthor(newFileName);
         return tmp;
     }
 
@@ -109,5 +106,4 @@ public class PaperBuilder {
         }
 
     }
-
-
+}

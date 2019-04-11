@@ -5,111 +5,95 @@
  */
 package MainPackage;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.io.File;
-import java.util.Scanner;
-import java.awt.Desktop;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
+import java.util.ArrayList;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import net.iharder.dnd.FileDrop;
-
 
 /**
  *
  * @author BalaH-RiG
  */
+public class MainWindow extends javax.swing.JFrame implements KeyListener, FocusListener, ActionListener {
 
-public class MainWindow extends javax.swing.JFrame implements KeyListener, FocusListener , ActionListener{
-	/**
-	 * Creates new form gameWindow
-	 */
-     ArrayList<BebTexFields> bibFields = new ArrayList<BebTexFields>();
-    public static PaperBuilder paperBuilder;
+    /**
+     * Creates new form gameWindow
+     */
+    ArrayList<BebTexFields> bibFields = new ArrayList<BebTexFields>();
     public File[] files;
     public static int fileIndexCnt;
-         
-	public MainWindow() {
-            
-		         
-		initComponents();
-		initializeIcon();
-	}
-        public void saveValidPapers(){
-                if(files.length >1){
-                    JOptionPane.showMessageDialog( this, "Error, PLease Enter 1 File");
-                    return;
-                }
-            new Runnable() {
-                @Override
-                public void run() {
-                   
-               fileIndexCnt=0;
-                  for(File file : files){
-                bibFields.add(fileIndexCnt, new BebTexFields());
-                bibFields.get(fileIndexCnt).setVisible(true);
-                bibFields.get(fileIndexCnt).getJButton().addActionListener(new BibTexButtonListener());
-                bibFields.get(fileIndexCnt).getTvTittle().setText(file.getName());
-                bibFields.get(fileIndexCnt).setTitle(file.getName());
 
-                
+    public MainWindow() {
 
-                PaperBuilder.setFile(file);
-                System.out.println(file.getAbsoluteFile()+" file exist="+file.exists()); 
-                  
+        initComponents();
+        initializeIcon();
 
-            }
-                }
-            }.run();
-        
-         
-        
-            
+    }
 
+    public void saveValidPapers() {
+        if (files.length > 1) {
+            JOptionPane.showMessageDialog(this, "Error, PLease Enter 1 File");
+            return;
         }
-	private void initializeIcon(){
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("cube1.png")));
-	}
-        
-        class BibTexButtonListener implements ActionListener{
+        new Runnable() {
+            @Override
+            public void run() {
+
+                fileIndexCnt = 0;
+                for (File file : files) {
+                    bibFields.add(fileIndexCnt, new BebTexFields());
+                    bibFields.get(fileIndexCnt).setVisible(true);
+                    bibFields.get(fileIndexCnt).getJButton().addActionListener(new BibTexButtonListener());
+                    bibFields.get(fileIndexCnt).getTvTittle().setText(file.getName());
+                    bibFields.get(fileIndexCnt).setTitle(file.getName());
+
+                    PaperBuilder.setFile(file);
+                    System.out.println(file.getAbsoluteFile() + " file exist=" + file.exists());
+
+                }
+            }
+        }.run();
+
+    }
+
+    private void initializeIcon() {
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("cube1.png")));
+    }
+
+    class BibTexButtonListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-                
-                System.out.println("MainPackage.MainWindow.BibTexButtonListener.actionPerformed() Save Button Clicked");
-               
-                PaperBuilder.setFile(files[fileIndexCnt]);
-                PaperBuilder.setNewFileName(bibFields.get(fileIndexCnt).getTvTittle().getText());
-                    PaperBuilder.buildPaper(files[fileIndexCnt]);
-                    bibFields.get(fileIndexCnt).dispose();
-                    fileIndexCnt++;
-        
+
+            System.out.println("MainPackage.MainWindow.BibTexButtonListener.actionPerformed() Save Button Clicked");
+
+            PaperBuilder.setFile(files[fileIndexCnt]);
+            PaperBuilder.setNewFileName(bibFields.get(fileIndexCnt).getTvTittle().getText());
+            PaperBuilder.buildPaper(files[fileIndexCnt]);
+
+            PapersManager.addPaper(PaperBuilder.getTmp());
+            bibFields.get(fileIndexCnt).dispose();
+            fileIndexCnt++;
+
         }
-        
-        }
-	/**
-	 * This method is called from within the constructor to initialize the form.
-	 * WARNING: Do NOT modify this code. The content of this method is always
-	 * regenerated by the Form Editor.
-	 */
-	@SuppressWarnings("unchecked")
+
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -149,7 +133,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             .addGap(0, 41, Short.MAX_VALUE)
         );
 
-        new  FileDrop(  System.out,jScrollPane2, new FileDrop.Listener()
+        new  FileDrop(  jScrollPane2, new FileDrop.Listener()
             {   public void  filesDropped(java.io.File[] addedFiles )
                 {
                     // handle file drop
@@ -182,6 +166,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
             jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/save.png"))); // NOI18N
             jMenuItem3.setText("Save Database");
+            jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem3ActionPerformed(evt);
+                }
+            });
             jMenu2.add(jMenuItem3);
 
             jMenuBar1.add(jMenu2);
@@ -267,97 +256,95 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         }// </editor-fold>//GEN-END:initComponents
 
 	private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-		HelpWindow x = new HelpWindow();
-		x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		x.setVisible(true);
+        HelpWindow x = new HelpWindow();
+        x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        x.setVisible(true);
 	}//GEN-LAST:event_jMenuItem1ActionPerformed
 
-
-	//Listeners
-
-           
-
+    //Listeners
 	private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
-		if(true)
-		{
-			SaveWindow save = new SaveWindow();
-			save.setVisible(true);
-		}
-		else
-			System.exit(0);
+        if (true) {
+            SaveWindow save = new SaveWindow();
+            save.setVisible(true);
+        } else {
+            System.exit(0);
+        }
 	}//GEN-LAST:event_windowClosing
 
 	private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
 
-
-		MyProgram.systemTheme();
-		SwingUtilities.updateComponentTreeUI(this);
+        MyProgram.systemTheme();
+        SwingUtilities.updateComponentTreeUI(this);
 	}//GEN-LAST:event_jMenuItem4ActionPerformed
 
 	private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
 
-		MyProgram.defaultTheme();
-		SwingUtilities.updateComponentTreeUI(this);
+        MyProgram.defaultTheme();
+        SwingUtilities.updateComponentTreeUI(this);
 	}//GEN-LAST:event_jMenuItem5ActionPerformed
 
 	private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-		MyProgram.restoreTheme();
-		SwingUtilities.updateComponentTreeUI(this);
+        MyProgram.restoreTheme();
+        SwingUtilities.updateComponentTreeUI(this);
 	}//GEN-LAST:event_jMenuItem7ActionPerformed
 
 	private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-		AboutWindow about = new AboutWindow();
-		about.setVisible(true);
+        AboutWindow about = new AboutWindow();
+        about.setVisible(true);
 	}//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+        PapersManager.load();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[]) {
-             fileIndexCnt=0;
-		/* Set the Nimbus look and feel */
-		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-		 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        PapersManager.save();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new MainWindow().setVisible(true);
-			}
-		});
-	}
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        fileIndexCnt = 0;
+        PapersManager.load();
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+		 * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
-
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainWindow().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -403,9 +390,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     @Override
     public void actionPerformed(ActionEvent e) {
-          
+
     }
-    
 
 }
-
