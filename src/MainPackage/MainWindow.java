@@ -63,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     public void saveValidPapers() {
         if (files.length > 1) {
-            JOptionPane.showMessageDialog(this, "Error, please Enter 1 File only.");
+            JOptionPane.showMessageDialog(this, "Error, please enter 1 file only.");
             return;
         }
         new Runnable() {
