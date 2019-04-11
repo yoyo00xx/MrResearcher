@@ -1,66 +1,75 @@
 package MainPackage;
 
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Paper {
-	private String name;
-	private ArrayList<Note> notes;
-	private double rating;
-	private String author;
-	private String date;
-	private String keywords;
+public class Paper implements Serializable {
 
-	public static void main(String[] args) {
-		System.out.println("Fuck off");
-		
-	}
-	public String getAuthor() {
-		return author;
-	}
+    private String name;
+    private ArrayList<Note> notes;
+    private double rating;
+    private String author;
+    private String date;
+    private String keywords;
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+    public static void main(String[] args) {
+        System.out.println("Fuck off");
 
-	public String getDate() {
-		return date;
-	}
+    }
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    public String getAuthor() {
+        return author;
+    }
 
-	public String getKeywords() {
-		return keywords;
-	}
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getKeywords() {
+        return keywords;
+    }
 
-	public ArrayList<Note> getNotes() {
-		return notes;
-	}
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
 
-	public void setNotes(ArrayList<Note> notes) {
-		this.notes = notes;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public double getRating() {
-		return rating;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setRating(double rating) {
-		this.rating = rating;
-	}
+    public ArrayList<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(ArrayList<Note> notes) {
+        this.notes = notes;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+
+        return "written by " + author;
+
+    }
 
 }

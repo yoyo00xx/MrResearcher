@@ -1,3 +1,5 @@
+package MainPackage;
+
 
 public class Bibtex {
 	private String entryType;
