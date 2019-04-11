@@ -53,7 +53,7 @@ public class PapersManager implements Serializable {
         papers.remove(paper);
     }
 
-    public static ArrayList getPapers() {
+    public static ArrayList<Paper> getPapers() {
         return papers;
     }
 

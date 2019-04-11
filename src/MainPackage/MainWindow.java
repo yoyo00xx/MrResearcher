@@ -41,7 +41,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     public void saveValidPapers() {
         if (files.length > 1) {
-            JOptionPane.showMessageDialog(this, "Error, PLease Enter 1 File");
+            JOptionPane.showMessageDialog(this, "Error, please Enter 1 File only.");
             return;
         }
         new Runnable() {
@@ -362,6 +362,12 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void updateList() {
+        for (Paper p : PapersManager.getPapers()) {
+            System.out.println(p.toString());
+        }
+    }
 
     @Override
     public void keyTyped(KeyEvent arg0) {

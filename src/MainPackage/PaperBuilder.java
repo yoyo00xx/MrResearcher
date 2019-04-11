@@ -50,7 +50,7 @@ public class PaperBuilder {
             saveFile();
         }
         tmp = new Paper();
-        tmp.setAuthor(newFileName);
+        tmp.setTitle(newFileName);
         return tmp;
     }
 
