@@ -53,36 +53,37 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         jTable1.getColumnModel().getColumn(8).setWidth(0);
 
     }
-	public MainWindow() {
-            
-		
-		initComponents();
-		initializeIcon();
-                createColumns();
-                PapersManager.load();
-                poulateUI();
-                sorter = new TableRowSorter<DefaultTableModel>(dm);
-                jTable1.setRowSorter(sorter);
-	}
-        private void search(String query){
-            
-            sorter.setRowFilter(RowFilter.regexFilter(query));
+
+    public MainWindow() {
+
+        initComponents();
+        initializeIcon();
+        createColumns();
+        PapersManager.load();
+        populateUI();
+        sorter = new TableRowSorter<DefaultTableModel>(dm);
+        jTable1.setRowSorter(sorter);
     }
-         public void poulateUI(){
-        
-            dm = (DefaultTableModel) jTable1.getModel();
-            dm.setRowCount(0);
-            int i=0;
-           for(Paper paper: PapersManager.papers){
-             String[] array = paper.getTableArray();
-             array[0]= i+"";
-            
-          dm.addRow(array);
-           i++;
-           }
-            
-            
+
+    private void search(String query) {
+
+        sorter.setRowFilter(RowFilter.regexFilter(query));
+    }
+
+    public void populateUI() {
+
+        dm = (DefaultTableModel) jTable1.getModel();
+        dm.setRowCount(0);
+        int i = 0;
+        for (Paper paper : PapersManager.papers) {
+            String[] array = paper.getTableArray();
+            array[0] = i + "";
+
+            dm.addRow(array);
+            i++;
         }
+
+    }
 
     public void saveValidPapers() {
         if (files.length > 1) {
@@ -123,13 +124,12 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
             PaperBuilder.setFile(files[fileIndexCnt]);
             PaperBuilder.setNewFileName(bibFields.get(fileIndexCnt).getTvTittle().getText());
-            PapersManager.papers.add(PaperBuilder.buildPaper(files[fileIndexCnt]));
-             poulateUI();
+            PapersManager.getPapers().add(PaperBuilder.buildPaper(files[fileIndexCnt]));
+            populateUI();
             bibFields.get(fileIndexCnt).dispose();
             fileIndexCnt++;
 
         }
-       
 
     }
 
@@ -395,8 +395,8 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 	}//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-       PapersManager.load();
-       poulateUI();
+        PapersManager.load();
+        populateUI();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -410,23 +410,22 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         PapersManager.save();
-        poulateUI();
+        populateUI();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
         PapersManager.papers.remove(index);
-         
-        poulateUI();
-      
-        
+
+        populateUI();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-            int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-            Paper paper = PapersManager.papers.get(index);
-            openPaper(paper);
-        
+        int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        Paper paper = PapersManager.papers.get(index);
+        openPaper(paper);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -445,25 +444,20 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             JOptionPane.showMessageDialog(this, "Error Desktop not supported");
             return;
         }
-        
+
         File file = new File(paper.getAbsolutePath());
         Desktop desktop = Desktop.getDesktop();
-        
-        if(file.exists()) try {
-            desktop.open(file);
-      } catch (IOException ex) {
-          Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    
+
+        if (file.exists()) {
+            try {
+                desktop.open(file);
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
-    
-//    public static int getSelectedIndex(){
-//    
-//     
-//     return Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-//    }
-    
-    
+
     /**
      * @param args the command line arguments
      */

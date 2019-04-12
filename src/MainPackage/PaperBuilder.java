@@ -54,7 +54,7 @@ public class PaperBuilder {
             saveFile();
         }
         tmp = new Paper();
-        tmp.setTitle(newFileName);
+        tmp.setTitle(newFileName.substring(0, newFileName.lastIndexOf(".")));
         tmp.setAbsolutePath(file.getAbsolutePath());
         return tmp;
     }
@@ -86,7 +86,7 @@ public class PaperBuilder {
 
     public static void saveFile() {
 
-        if (newFileName.lastIndexOf(".") == -1) {
+        if (!newFileName.substring(newFileName.length() - 4).equalsIgnoreCase(".pdf")) {
             newFileName = newFileName.concat(".pdf");
         }
 
@@ -112,5 +112,3 @@ public class PaperBuilder {
 
     }
 }
-
-
