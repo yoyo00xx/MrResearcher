@@ -10,6 +10,16 @@ package MainPackage;
  * @author st201518650
  */
 public class NotesWindow extends javax.swing.JFrame {
+    
+    private Paper papers;
+
+    public Paper getPapers() {
+        return papers;
+    }
+
+    public void setPapers(Paper papers) {
+        this.papers = papers;
+    }
 
     /**
      * Creates new form NotesWindow
