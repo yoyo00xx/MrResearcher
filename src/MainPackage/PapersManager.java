@@ -83,7 +83,7 @@ public class PapersManager implements Serializable {
     public static void load() {
         ObjectInputStream ois = null;
         try {
-            RandomAccessFile raf = new RandomAccessFile("src/Papers/database.db", "rw");
+            RandomAccessFile raf = new RandomAccessFile("src/Papers/database.db", "r");
             FileInputStream fos = new FileInputStream(raf.getFD());
             ois = new ObjectInputStream(fos);
             papers = new ArrayList<>();

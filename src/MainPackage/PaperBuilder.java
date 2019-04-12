@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 
 public class PaperBuilder {
 
@@ -17,7 +19,27 @@ public class PaperBuilder {
 
     public static void main(String[] args) {
 
-        file = new File(PAPERS_DIRECTORY + "gogo.pdf");
+        file = new File(PAPERS_DIRECTORY + "p.pdf");
+        System.out.println(file.exists());
+        PDDocument doc = null;
+        try {
+            doc = PDDocument.load(file);
+        } catch (IOException ex) {
+            Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        PDDocumentInformation info = doc.getDocumentInformation();
+        System.out.println("Page Count=" + doc.getNumberOfPages());
+        System.out.println("Title=" + info.getTitle());
+        System.out.println("Author=" + info.getAuthor());
+        System.out.println("Subject=" + info.getSubject());
+        System.out.println("Keywords=" + info.getKeywords());
+        System.out.println("Creator=" + info.getCreator());
+        System.out.println("Producer=" + info.getProducer());
+        System.out.println("Creation Date=" + info.getCreationDate());
+        System.out.println("Modification Date=" + info.getModificationDate());
+        System.out.println("Trapped=" + info.getTrapped());
+        System.out.println(info.getMetadataKeys().toString());
 
     }
 
