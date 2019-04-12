@@ -55,6 +55,7 @@ public class PaperBuilder {
         }
         tmp = new Paper();
         tmp.setTitle(newFileName);
+        tmp.setAbsolutePath(file.getAbsolutePath());
         return tmp;
     }
 

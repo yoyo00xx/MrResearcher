@@ -15,6 +15,15 @@ public class Paper implements Serializable {
     private String category;
     private String year;
     private String dateAdded;
+    private String absolutePath;
+
+    public String getAbsolutePath() {
+        return absolutePath;
+    }
+
+    public void setAbsolutePath(String absolutePath) {
+        this.absolutePath = absolutePath;
+    }
     private HashSet<String> keywords = new HashSet<>();
 
     public Paper() {
