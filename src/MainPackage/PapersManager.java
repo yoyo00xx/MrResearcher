@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class PapersManager implements Serializable {
 
-     static ArrayList<Paper> papers = new ArrayList<>();
+    static ArrayList<Paper> papers = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -86,7 +86,7 @@ public class PapersManager implements Serializable {
             RandomAccessFile raf = new RandomAccessFile("src/Papers/database.db", "rw");
             FileInputStream fos = new FileInputStream(raf.getFD());
             ois = new ObjectInputStream(fos);
-
+            papers = new ArrayList<>();
             papers.addAll(((ArrayList<Paper>) ois.readObject()));
             System.out.println(papers.toString());
         } catch (IOException ex) {
