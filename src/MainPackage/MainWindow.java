@@ -40,6 +40,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     public File[] files;
     public static int fileIndexCnt;
     DefaultTableModel dm;
+    TableRowSorter<DefaultTableModel> sorter;
 
     private void createColumns() {
         dm = (DefaultTableModel) jTable1.getModel();
@@ -60,10 +61,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                 createColumns();
                 PapersManager.load();
                 poulateUI();
+                sorter = new TableRowSorter<DefaultTableModel>(dm);
+                jTable1.setRowSorter(sorter);
 	}
         private void search(String query){
-            TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(dm);
-            jTable1.setRowSorter(sorter);
+            
             sorter.setRowFilter(RowFilter.regexFilter(query));
     }
          public void poulateUI(){
