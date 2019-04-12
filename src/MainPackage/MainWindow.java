@@ -201,6 +201,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         });
 
         jButton3.setText("View Notes");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Switch Mode");
 
@@ -423,6 +428,17 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             openPaper(paper);
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        Paper paper = PapersManager.papers.get(index);
+        NotesWindow x = new NotesWindow(paper);
+        x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       
+        
+        x.setVisible(true);
+       
+    }//GEN-LAST:event_jButton3ActionPerformed
     public void openPaper(Paper paper){
       if(!Desktop.isDesktopSupported()){
             System.out.println("Desktop is not supported");
@@ -440,6 +456,12 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
       }
     
     }
+    
+//    public static int getSelectedIndex(){
+//    
+//     
+//     return Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+//    }
     
     
     /**

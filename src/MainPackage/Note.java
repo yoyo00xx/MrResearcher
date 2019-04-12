@@ -9,7 +9,7 @@ public class Note implements Serializable {
     private String title;
     private String category;
     private String content;
-    private HashSet<String> keywords = new HashSet<>();
+    private String keywords ;
 
     public Note() {
     }
@@ -19,24 +19,41 @@ public class Note implements Serializable {
         this.category = category;
         this.content = content;
     }
+       public Note(String title, String category, String content, String keywords) {
+        this.title = title;
+        this.category = category;
+        this.content = content;
+        this.keywords = keywords;
+    }
 
-    public HashSet getKeywords() {
+    public String getKeywords() {
         return keywords;
     }
+    
+        public String[] getTableArray() {
+        String[] paperArray = new String[5];
+        paperArray[0] = "";
+        paperArray[1] = title;
+        paperArray[2] = category;
+        paperArray[3] = content;
+        paperArray[4] = keywords;
+        
+        return paperArray;
+    } 
 
-    public void removeKeywords(String words) {
-        Scanner sc = new Scanner(words);
-        while (sc.hasNext()) {
-            keywords.remove(sc.next());
-        }
-    }
-
-    public void addKeywords(String words) {
-        Scanner sc = new Scanner(words);
-        while (sc.hasNext()) {
-            keywords.add(sc.next());
-        }
-    }
+//    public void removeKeywords(String words) {
+//        Scanner sc = new Scanner(words);
+//        while (sc.hasNext()) {
+//            keywords.remove(sc.next());
+//        }
+//    }
+//
+//    public void addKeywords(String words) {
+//        Scanner sc = new Scanner(words);
+//        while (sc.hasNext()) {
+//            keywords.add(sc.next());
+//        }
+//    }
 
     public String getTitle() {
         return title;
