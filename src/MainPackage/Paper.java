@@ -13,6 +13,21 @@ public class Paper implements Serializable {
     private String author;
     private String enteryType;
     private String category;
+
+    public String getCategory() {
+        return category;
+    }
+    
+    public void modifyNote(int index,String title,String category,String content,String keywords){
+        Note tmp = notes.get(index);
+        tmp.setCategory(category);
+        tmp.setContent(content);
+        tmp.setTitle(title);
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
     private String year;
     private String dateAdded;
     private String absolutePath;

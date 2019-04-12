@@ -5,27 +5,88 @@
  */
 package MainPackage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 /**
  *
  * @author st201518650
  */
 public class NotesWindow extends javax.swing.JFrame {
+    AddNoteButtonListener listener;
+    private NoteAdd noteAddJframe;
+    // TODO REMOVE STATIC INNIT
+    private Paper paper ;    
+    public NotesWindow(Paper paper){
+    this.paper = paper;
+      initComponents();
+        createColumns();
+        creatTestNotes();
+        populateNotes();
+        
+        sorter = new TableRowSorter<DefaultTableModel>(dm);
+        jTable1.setRowSorter(sorter);
+    }
     
-    private Paper papers;
+    
+     DefaultTableModel dm;
+     TableRowSorter<DefaultTableModel> sorter;
+     private void creatTestNotes(){
+         System.out.println("MainPackage.NotesWindow.creatTestNotes() PAPER IS"+paper.getTitle());
+     paper.getNotes().add(new Note("Tittle of This Paper", "Science", "dlakjdasldkjasldksjdslakdjsaldksjdsalkdjasdlkadjasldkjsadlkdjasldkajsdlksjdsalkdja"));
+     paper.getNotes().add(new Note("Tittle2 of This Paper", "Science", "dlakjdasldkjasldksjdslakdjsaldksjdsalkdjasdlkadjasldkjsadlkdjasldkajsdlksjdsalkdja"));
+         }
+    private void createColumns() {
+        dm = (DefaultTableModel) jTable1.getModel();
+        String[] columns = {"#", "Title", "Category", "Date Modified"};
+//        jTable1.getColumnModel().getColumn(0).setMinWidth(5);
+//        jTable1.getColumnModel().getColumn(0).setMaxWidth(5);
+//        jTable1.getColumnModel().getColumn(0).setWidth(5);
+        for (String column : columns) {
+            dm.addColumn(column);
+        }
+        
+        
+
+
+    }
+    public void populateNotes(){
+         dm = (DefaultTableModel) jTable1.getModel();
+            dm.setRowCount(0);
+            int i=0;
+            for(Note note : paper.getNotes()){
+                String[] array = note.getTableArray();
+             array[0]= i+"";
+            
+          dm.addRow(array);
+           i++;
+            }
+        }
 
     public Paper getPapers() {
-        return papers;
+        return paper;
     }
 
     public void setPapers(Paper papers) {
-        this.papers = papers;
+        this.paper = papers;
     }
 
     /**
      * Creates new form NotesWindow
      */
     public NotesWindow() {
+        
+        
         initComponents();
+        createColumns();
+        creatTestNotes();
+        populateNotes();
+        
+        sorter = new TableRowSorter<DefaultTableModel>(dm);
+        jTable1.setRowSorter(sorter);
     }
 
     /**
@@ -48,10 +109,25 @@ public class NotesWindow extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Delete");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("View/Edit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Add");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,6 +163,64 @@ public class NotesWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      
+         noteAddJframe = new NoteAdd(paper);
+        noteAddJframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        noteAddJframe.getjButton1().addActionListener(new AddNoteButtonListener());
+        noteAddJframe.setVisible(true);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       noteAddJframe = new NoteAdd(paper);
+       int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+       Note selectedNote = paper.getNotes().get(index);     
+       noteAddJframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       noteAddJframe.getjButton1().addActionListener(new EditNoteButtonListener());
+       noteAddJframe.getjTextArea1().setText(selectedNote.getContent());
+       noteAddJframe.getjTextField1().setText(selectedNote.getTitle());
+       noteAddJframe.getjTextField2().setText(selectedNote.getKeywords());
+       noteAddJframe.setVisible(true);
+       
+ 
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+                  int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+                    paper.getNotes().remove(index);
+                    populateNotes();
+    }//GEN-LAST:event_jButton1ActionPerformed
+    class  EditNoteButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           
+            int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+            Note selectedNote = paper.getNotes().set(index, new Note(noteAddJframe.getjTextField1().getText(), paper.getCategory(),noteAddJframe.getjTextArea1().getText(),noteAddJframe.getjTextField2().getText()));
+            noteAddJframe.dispose();
+            populateNotes();
+            System.out.println("XXXXXXXXXXXXXXXXXXXX Edit Notes Performed");
+            
+        }
+    
+    }
+    
+      class  AddNoteButtonListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+           
+            paper.getNotes().add(new Note(noteAddJframe.getjTextField1().getText(), paper.getCategory(),noteAddJframe.getjTextArea1().getText(),noteAddJframe.getjTextField2().getText()));
+            noteAddJframe.dispose();
+            populateNotes();
+            System.out.println("XXXXXXXXXXXXXXXXXXXX Add Notes Performed");
+            
+        }
+    
+    }
+      
+         
     /**
      * @param args the command line arguments
      */
