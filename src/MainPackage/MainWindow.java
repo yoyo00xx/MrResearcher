@@ -5,6 +5,7 @@
  */
 package MainPackage;
 
+import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +14,10 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -140,6 +144,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -184,12 +189,21 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             }
         });
 
+        jButton2.setText("Open");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
@@ -204,7 +218,8 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -388,6 +403,31 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+            int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+            Paper paper = PapersManager.papers.get(index);
+            openPaper(paper);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+    public void openPaper(Paper paper){
+      if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported");
+            JOptionPane.showMessageDialog(this, "Error Desktop not supported");
+            return;
+        }
+        
+        File file = new File(paper.getAbsolutePath());
+        Desktop desktop = Desktop.getDesktop();
+        
+        if(file.exists()) try {
+            desktop.open(file);
+      } catch (IOException ex) {
+          Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -433,6 +473,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
