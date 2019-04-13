@@ -89,30 +89,29 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             JOptionPane.showMessageDialog(this, "Error, please enter 1 file only.");
             return;
         }
-        new Runnable() {
-            @Override
-            public void run() {
 
-                fileIndexCnt = 0;
-                for (File file : files) {
-                    bibFields = new BebTexFields();
-                    bibFields.setVisible(true);
-                    PaperBuilder.RenameFile(file);
-                    System.out.println(".run()XXXXXXXXXXXXXXXX");
-                    bibFields.getTvAuthor().setText(PaperBuilder.getTmp().getAuthor());
-                    bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
-                    bibFields.getTvCategory().setText(PaperBuilder.getTmp().getCategory());
-                    bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
-                    bibFields.getJButton().addActionListener(new BibTexButtonListener());
-                    bibFields.getTvTittle().setText(file.getName());
-                    bibFields.setTitle(file.getName());
-
-                    PaperBuilder.setFile(file);
-                    System.out.println(file.getAbsoluteFile() + " file exist=" + file.exists());
-
-                }
+        fileIndexCnt = 0;
+        for (File file : files) {
+            if (paperBuilder.verifyFile(file) == false) {
+                JOptionPane.showMessageDialog(new JFrame(), "Please Enter a PDF File");
+                return;
             }
-        }.run();
+            bibFields = new BebTexFields();
+            bibFields.setVisible(true);
+            PaperBuilder.renameFile(file);
+            System.out.println(".run()XXXXXXXXXXXXXXXX");
+            bibFields.getTvAuthor().setText(PaperBuilder.getTmp().getAuthor());
+            bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
+            bibFields.getTvCategory().setText(PaperBuilder.getTmp().getCategory());
+            bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
+            bibFields.getJButton().addActionListener(new BibTexButtonListener());
+            bibFields.getTvTittle().setText(file.getName());
+            bibFields.setTitle(file.getName());
+
+            PaperBuilder.setFile(file);
+            System.out.println(file.getAbsoluteFile() + " file exist=" + file.exists());
+
+        }
 
     }
 
@@ -426,7 +425,14 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        int index;
+        try {
+            index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        } catch (IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "Error: no paper was selected.");
+
+            return;
+        }
         PapersManager.getPapers().remove(index);
 
         populateUI();
@@ -434,14 +440,28 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        int index;
+        try {
+            index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        } catch (IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "Error: no paper was selected.");
+
+            return;
+        }
         Paper paper = PapersManager.getPapers().get(index);
         openPaper(paper);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        int index;
+        try {
+            index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        } catch (IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(this, "Error: no paper was selected.");
+
+            return;
+        }
         Paper paper = PapersManager.getPapers().get(index);
         NotesWindow x = new NotesWindow(paper);
         x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -535,12 +555,6 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
-    private void updateList() {
-        for (Paper p : PapersManager.getPapers()) {
-            System.out.println(p.toString());
-        }
-    }
 
     @Override
     public void keyTyped(KeyEvent arg0) {

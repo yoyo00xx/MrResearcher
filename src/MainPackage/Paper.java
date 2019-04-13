@@ -9,7 +9,7 @@ public class Paper implements Serializable {
     private ArrayList<Note> notes = new ArrayList<>();
     private String rating;
     private String author;
-    private String enteryType;
+    private String entryType;
     private String category;
     private String keywords;
     private Bibtex bibtex;
@@ -136,7 +136,7 @@ public class Paper implements Serializable {
     public String[] getTableArray() {
         String[] paperArray = new String[8];
         paperArray[0] = "";
-        paperArray[1] = enteryType;
+        paperArray[1] = entryType;
         paperArray[2] = author;
         paperArray[3] = title;
         paperArray[4] = rating;
