@@ -26,6 +26,7 @@ public class MyProgram {
     public static void systemTheme() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MyProgram.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -39,7 +40,7 @@ public class MyProgram {
 
     public static void defaultTheme() {
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MyProgram.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -54,7 +55,7 @@ public class MyProgram {
 
     public static void restoreTheme() {
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MyProgram.class.getName()).log(Level.SEVERE, null, ex);

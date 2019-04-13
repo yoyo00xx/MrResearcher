@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -34,14 +36,17 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     /**
      * Creates new form gameWindow
      */
+    boolean noteMode = false;
+    static boolean changed = false;
     BebTexFields bibFields = new BebTexFields();
     public static PaperBuilder paperBuilder;
     public File[] files;
     public static int fileIndexCnt;
     DefaultTableModel dm;
     TableRowSorter<DefaultTableModel> sorter;
+    
 
-    private void createColumns() {
+    private void createPaperColumns() {
         dm = (DefaultTableModel) jTable1.getModel();
         String[] columns = {"#", "EntryType", "Author", "Title", "Category", "Year", "Date Added", "Rating", "Keywords"};
         for (String column : columns) {
@@ -50,31 +55,63 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         jTable1.getColumnModel().getColumn(8).setMinWidth(0);
         jTable1.getColumnModel().getColumn(8).setMaxWidth(0);
         jTable1.getColumnModel().getColumn(8).setWidth(0);
+        noteMode = false;
 
+    }
+
+        private void createNoteColumns() {
+        dm = (DefaultTableModel) jTable1.getModel();
+        String[] columns = {"#","Paper","Title", "Category","Content","Keywords"};
+        for (String column : columns) {
+            dm.addColumn(column);
+        }
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(0).setWidth(0);
+        jTable1.getColumnModel().getColumn(4).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(4).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(4).setWidth(0);
+        jTable1.getColumnModel().getColumn(5).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(5).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(5).setWidth(0);
+        noteMode = true;
     }
 
     public MainWindow() {
 
         initComponents();
         initializeIcon();
-        createColumns();
+        createPaperColumns();
         PapersManager.load();
-        populateUI();
+        populatePaperUI();
+        buildComboBox();
         sorter = new TableRowSorter<DefaultTableModel>(dm);
         jTable1.setRowSorter(sorter);
     }
-
-    private void search(String query) {
-
-        sorter.setRowFilter(RowFilter.regexFilter(query));
+    private void buildComboBox(){
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("All Columns");
+        for(int i = 0; i<jTable1.getColumnCount() ; i++){
+            jComboBox1.addItem(jTable1.getColumnName(i));
+        }
     }
 
-    public void populateUI() {
+    private void search(String query) {
+        if(jComboBox1.getSelectedIndex()==0){
+            sorter.setRowFilter(RowFilter.regexFilter(query));
+        }
+        else{
+            sorter.setRowFilter(RowFilter.regexFilter(query, jComboBox1.getSelectedIndex()-1));
+        }
+        
+    }
+
+    public void populatePaperUI() {
 
         dm = (DefaultTableModel) jTable1.getModel();
         dm.setRowCount(0);
         int i = 0;
-        for (Paper paper : PapersManager.getPapers()) {
+        for (Paper paper : PapersManager.papers) {
             String[] array = paper.getTableArray();
             array[0] = i + "";
 
@@ -83,40 +120,65 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         }
 
     }
+    public void populateNoteUI(){
+        
+            dm = (DefaultTableModel) jTable1.getModel();
+            dm.setRowCount(0);
+           int i=0;
+           for(Paper paper: PapersManager.papers){
+               
+               int j=0;
+               for(Note note : paper.getNotes()){
+                   ArrayList<String> noteColumns = new ArrayList<String>();
+                   noteColumns.add(i+":"+j);
+                   String[] array = note.getTableArray();
+                   array[0]= paper.getTitle();
+                   noteColumns.addAll(Arrays.asList(array));
+                   dm.addRow(noteColumns.toArray());
+                   j++;
+               }
+               i++;
+             
+          
+           }
+            
+            
+        }
 
     public void saveValidPapers() {
         if (files.length > 1) {
             JOptionPane.showMessageDialog(this, "Error, please enter 1 file only.");
             return;
         }
+        new Runnable() {
+            @Override
+            public void run() {
 
-        fileIndexCnt = 0;
-        for (File file : files) {
-            if (paperBuilder.verifyFile(file) == false) {
-                JOptionPane.showMessageDialog(new JFrame(), "Please Enter a PDF File");
-                return;
+                fileIndexCnt = 0;
+                for (File file : files) {
+                    bibFields = new BebTexFields();
+                    bibFields.setVisible(true);
+                    PaperBuilder.RenameFile(file);
+                    System.out.println(".run()XXXXXXXXXXXXXXXX");
+                    bibFields.getTvAuthor().setText(PaperBuilder.getTmp().getAuthor());
+                    bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
+                    bibFields.getTvCategory().setText(PaperBuilder.getTmp().getCategory());
+                    bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
+                    bibFields.getJButton().addActionListener(new BibTexButtonListener());
+                    bibFields.getTvTittle().setText(file.getName());
+                    bibFields.setTitle(file.getName());
+
+                    PaperBuilder.setFile(file);
+                    System.out.println(file.getAbsoluteFile() + " file exist=" + file.exists());
+
+                }
             }
-            bibFields = new BebTexFields();
-            bibFields.setVisible(true);
-            PaperBuilder.renameFile(file);
-            System.out.println(".run()XXXXXXXXXXXXXXXX");
-            bibFields.getTvAuthor().setText(PaperBuilder.getTmp().getAuthor());
-            bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
-            bibFields.getTvCategory().setText(PaperBuilder.getTmp().getCategory());
-            bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
-            bibFields.getJButton().addActionListener(new BibTexButtonListener());
-            bibFields.getTvTittle().setText(file.getName());
-            bibFields.setTitle(file.getName());
-
-            PaperBuilder.setFile(file);
-            System.out.println(file.getAbsoluteFile() + " file exist=" + file.exists());
-
-        }
+        }.run();
 
     }
 
     private void initializeIcon() {
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("cube1.png")));
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("mrresearch.png")));
     }
 
     class BibTexButtonListener implements ActionListener {
@@ -149,6 +211,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenu4 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -156,12 +219,16 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -169,6 +236,8 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
+
+        jMenu4.setText("jMenu4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Mr Researcher");
@@ -215,6 +284,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         });
 
         jButton4.setText("Switch Mode");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -229,11 +303,13 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +321,8 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -257,6 +334,10 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                     saveValidPapers();
                 }   // end filesDropped
             });
+
+            jTable1.setModel(new javax.swing.table.DefaultTableModel()
+                {public boolean isCellEditable(int row, int column){return false;}}
+            );
             jScrollPane2.setViewportView(jTable1);
 
             jMenu2.setText("File");
@@ -283,6 +364,28 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
             jMenuBar1.add(jMenu2);
 
+            jMenu5.setText("Edit");
+
+            jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/edit.png"))); // NOI18N
+            jMenuItem6.setText("Change BibTeX");
+            jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem6ActionPerformed(evt);
+                }
+            });
+            jMenu5.add(jMenuItem6);
+
+            jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/reference.png"))); // NOI18N
+            jMenuItem9.setText("Add Reference");
+            jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jMenuItem9ActionPerformed(evt);
+                }
+            });
+            jMenu5.add(jMenuItem9);
+
+            jMenuBar1.add(jMenu5);
+
             jMenu1.setText("Themes");
 
             jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Operating_System_32px_2.png"))); // NOI18N
@@ -295,7 +398,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             jMenu1.add(jMenuItem4);
 
             jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/MainPackage/icons8_Java_32px.png"))); // NOI18N
-            jMenuItem5.setText("Java");
+            jMenuItem5.setText("Dark");
             jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jMenuItem5ActionPerformed(evt);
@@ -364,46 +467,46 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         }// </editor-fold>//GEN-END:initComponents
 
 	private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        HelpWindow x = new HelpWindow();
-        x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        x.setVisible(true);
+            HelpWindow x = new HelpWindow();
+            x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            x.setVisible(true);
 	}//GEN-LAST:event_jMenuItem1ActionPerformed
 
     //Listeners
 	private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
-        if (true) {
-            SaveWindow save = new SaveWindow();
-            save.setVisible(true);
-        } else {
-            System.exit(0);
-        }
+            if (changed) {
+                SaveWindow save = new SaveWindow();
+                save.setVisible(true);
+            } else {
+                System.exit(0);
+            }
 	}//GEN-LAST:event_windowClosing
 
 	private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
 
-        MyProgram.systemTheme();
-        SwingUtilities.updateComponentTreeUI(this);
+            MyProgram.systemTheme();
+            SwingUtilities.updateComponentTreeUI(this);
 	}//GEN-LAST:event_jMenuItem4ActionPerformed
 
 	private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
 
-        MyProgram.defaultTheme();
-        SwingUtilities.updateComponentTreeUI(this);
+            MyProgram.defaultTheme();
+            SwingUtilities.updateComponentTreeUI(this);
 	}//GEN-LAST:event_jMenuItem5ActionPerformed
 
 	private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        MyProgram.restoreTheme();
-        SwingUtilities.updateComponentTreeUI(this);
+            MyProgram.restoreTheme();
+            SwingUtilities.updateComponentTreeUI(this);
 	}//GEN-LAST:event_jMenuItem7ActionPerformed
 
 	private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        AboutWindow about = new AboutWindow();
-        about.setVisible(true);
+            AboutWindow about = new AboutWindow();
+            about.setVisible(true);
 	}//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         PapersManager.load();
-        populateUI();
+        populatePaperUI();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -417,7 +520,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         PapersManager.save();
-        populateUI();
+        populatePaperUI();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -426,46 +529,76 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
         } catch (IndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(this, "Error: no paper was selected.");
-
+            Note selectedNote = paper.getNotes().remove(Integer.parseInt(noteIndex[1]));
             return;
         }
         PapersManager.getPapers().remove(index);
 
-        populateUI();
+        populatePaperUI();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int index;
-        try {
-            index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        } catch (IndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(this, "Error: no paper was selected.");
-
-            return;
+        if(noteMode){
+            String s = (String)jTable1.getValueAt(jTable1.getSelectedRow(), 0);
+            String [] noteIndex = s.split(":");
+            Paper paper = PapersManager.papers.get(Integer.parseInt(noteIndex[0]));
+            Note selectedNote = paper.getNotes().get(Integer.parseInt(noteIndex[1]));
+            NoteAdd noteAddJframe = new NoteAdd();
+            noteAddJframe.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            noteAddJframe.getjTextArea1().setText(selectedNote.getContent());
+            noteAddJframe.getjTextArea1().setEditable(false);
+            noteAddJframe.getjTextField1().setText(selectedNote.getTitle());
+            noteAddJframe.getjTextField1().setEditable(false);
+            noteAddJframe.getjTextField2().setText(selectedNote.getKeywords());
+            noteAddJframe.getjTextField2().setEditable(false);
+            noteAddJframe.getjButton1().setVisible(false);
+            noteAddJframe.setVisible(true);
         }
-        Paper paper = PapersManager.getPapers().get(index);
-        openPaper(paper);
+        else{
+            int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+            Paper paper = PapersManager.papers.get(index);
+            openPaper(paper);
+        }
+        
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int index;
-        try {
-            index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        } catch (IndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(this, "Error: no paper was selected.");
-
-            return;
+        if(!noteMode){
+            int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+            Paper paper = PapersManager.papers.get(index);
+            NotesWindow x = new NotesWindow(paper);
+            x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            x.setVisible(true);
         }
-        Paper paper = PapersManager.getPapers().get(index);
-        NotesWindow x = new NotesWindow(paper);
-        x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        x.setVisible(true);
-
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        dm.setColumnCount(0);
+        if(noteMode){
+            jButton3.setVisible(true);
+            createPaperColumns();
+            populatePaperUI();
+            buildComboBox();
+        }
+        else{
+            jButton3.setVisible(false);
+            createNoteColumns();
+            populateNoteUI();
+            buildComboBox();
+        }    
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        bibFields = new BebTexFields();
+        bibFields.setVisible(true);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        RefSelect refWindow = new RefSelect(Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0)));
+        refWindow.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
     public void openPaper(Paper paper) {
         if (!Desktop.isDesktopSupported()) {
             System.out.println("Desktop is not supported");
@@ -529,28 +662,40 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    private void updateList() {
+        for (Paper p : PapersManager.getPapers()) {
+            System.out.println(p.toString());
+        }
+    }
 
     @Override
     public void keyTyped(KeyEvent arg0) {

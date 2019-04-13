@@ -37,7 +37,6 @@ public class Note implements Serializable {
         paperArray[2] = category;
         paperArray[3] = content;
         paperArray[4] = keywords;
-        
         return paperArray;
     } 
 
@@ -78,4 +77,5 @@ public class Note implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
+    
 }
