@@ -29,7 +29,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jTextField12" min="-2" pref="213" max="-2" attributes="0"/>
+                      <Component id="TvPublisher" min="-2" pref="213" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -107,7 +107,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="tvVolume" min="-2" pref="213" max="-2" attributes="0"/>
+                      <Component id="tvCategory" min="-2" pref="213" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="60" max="32767" attributes="0"/>
@@ -127,7 +127,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tvVolume" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tvCategory" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -203,7 +203,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField12" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TvPublisher" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -264,7 +264,7 @@
         <Property name="text" type="java.lang.String" value="Editor*"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField12">
+    <Component class="javax.swing.JTextField" name="TvPublisher">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
@@ -306,11 +306,11 @@
         <Property name="text" type="java.lang.String" value="Institution"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tvVolume">
+    <Component class="javax.swing.JTextField" name="tvCategory">
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel27">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Volume"/>
+        <Property name="text" type="java.lang.String" value="Category"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel28">
