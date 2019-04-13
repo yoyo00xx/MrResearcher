@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -52,7 +54,7 @@ public class PaperBuilder {
         return tmp;
     }
 
-    public   void setTmp(Paper tmp) {
+    public void setTmp(Paper tmp) {
         this.tmp = tmp;
     }
 
@@ -111,7 +113,7 @@ public class PaperBuilder {
     }
 
     public static void RenameFile() {
-         
+
         PDDocument doc = null;
 
         try {
@@ -122,49 +124,74 @@ public class PaperBuilder {
 
         PDDocumentInformation info = doc.getDocumentInformation();
         System.out.println("Page Count=" + doc.getNumberOfPages());
-       tmp.setTitle(info.getTitle());
-        tmp.setAuthor(info.getAuthor());
-        tmp.setCategory(info.getSubject());
-        tmp.setKeywords(info.getKeywords());
+        if (info.getTitle() != null) {
+            tmp.setTitle(info.getTitle());
+        }
+        if (info.getAuthor() != null) {
+            tmp.setAuthor(info.getAuthor());
+        }
+        if (info.getSubject() != null) {
+            tmp.setCategory(info.getSubject());
+        }
+        if (info.getKeywords() != null) {
+            tmp.setKeywords(info.getKeywords());
+        }
         System.out.println("Creator=" + info.getCreator());
         System.out.println("Producer=" + info.getProducer());
         System.out.println("Creation Date=" + info.getCreationDate());
-        tmp.setDate(info.getModificationDate().getCalendarType());
-        System.out.println("XXXXXXXXXXXXXXXXXXXXX"+tmp.getDate());
+      
+        
         System.out.println("Trapped=" + info.getTrapped());
         System.out.println(info.getMetadataKeys().toString());
-
     }
-      public static void RenameFile(File file) {
-         
+
+    public static void RenameFile(File file) {
+
         PDDocument doc = null;
         tmp = new Paper();
-        
-        try {
-            doc = PDDocument.load(file);
-        } catch (IOException ex) {
-            Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        PDDocumentInformation info = doc.getDocumentInformation();
-        System.out.println("Page Count=" + doc.getNumberOfPages());
-        if(info.getTitle()!= null)
-       tmp.setTitle(info.getTitle());
-        if(info.getAuthor()!= null)
-        tmp.setAuthor(info.getAuthor());
-        if(info.getSubject()!= null)
-        tmp.setCategory(info.getSubject());
-        if(info.getKeywords()!= null)
-        tmp.setKeywords(info.getKeywords());
-        System.out.println("Creator=" + info.getCreator());
-        System.out.println("Producer=" + info.getProducer());
-        System.out.println("Creation Date=" + info.getCreationDate());
-        if(info.getModificationDate().getCalendarType()!= null)
-        tmp.setDate(info.getModificationDate().getCalendarType());
-        System.out.println("XXXXXXXXXXXXXXXXXXXXX"+tmp.getDate());
-        System.out.println("Trapped=" + info.getTrapped());
-        System.out.println(info.getMetadataKeys().toString());
+        if (verifyFile(file)) {
+            try {
+                doc = PDDocument.load(file);
+             
 
+            PDDocumentInformation info = doc.getDocumentInformation();
+            System.out.println("Page Count=" + doc.getNumberOfPages());
+            if (info.getTitle() != null) {
+                tmp.setTitle(info.getTitle());
+            }
+            if (info.getAuthor() != null) {
+                tmp.setAuthor(info.getAuthor());
+            }
+            if (info.getSubject() != null) {
+                tmp.setCategory(info.getSubject());
+            }
+            if (info.getKeywords() != null) {
+                tmp.setKeywords(info.getKeywords());
+            }
+            System.out.println("Creator=" + info.getCreator());
+            System.out.println("Producer=" + info.getProducer());
+            System.out.println("Creation Date=" + info.getCreationDate());
+          if (info.getCreationDate()!= null) {
+            if (info.getCreationDate().getCalendarType() != null) {
+                
+                 DateFormat dateFormat = new SimpleDateFormat("yyyy'/'MM'/'d");  
+                String strDate = dateFormat.format(info.getCreationDate().getTime());  
+                tmp.setDate(strDate);
+                System.out.println("XXXXXXXXXXXXXXXXXXXXX" );
+            }
+        }   System.out.println("Key Words"+info.getKeywords());
+            System.out.println("Trapped=" + info.getTrapped());
+            System.out.println(info.getMetadataKeys().toString());
+             doc.close();
+        }
+             
+            
+        catch (IOException ex) {
+                Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+      
+
+    }
     }
 
     public static void saveFile() {
