@@ -13,6 +13,8 @@ import org.graphstream.ui.view.Viewer;
  */
 public class RelationshipBuilder {
 
+    public static Graph graph = new MultiGraph("", false, true);
+
     public static void main(String[] args) {
         Graph graph = new MultiGraph("Tutorial 1");
         graph.addNode("A");
@@ -32,12 +34,16 @@ public class RelationshipBuilder {
             graph.addEdge("" + i, "B", "" + i);
 
         }
-// graph.addEdge("CB", "C", "B");
+        initGraph();
+
+    }
+
+    private static void initGraph() {
+
         for (Node node : graph.getNodeSet()) {
             node.addAttribute("ui.label", node.getId());
         }
-        graph.getNode("B").setAttribute("ui.class", "marked");
-
+        //graph.getNode("B").setAttribute("ui.class", "marked");
         String s = "graph {\n"
                 + "	fill-mode: gradient-vertical; fill-color: gray, white, white, white, white, gray;\n"
                 + "}\n"
@@ -62,9 +68,7 @@ public class RelationshipBuilder {
                 + "	fill-color: red;\n"
                 + "}"
                 + "edge { fill-color: darkred; shadow-mode: plain; shadow-width: 3px; shadow-color: #FC0; shadow-offset: 0px; size: 4px; }";
-
         graph.addAttribute("ui.stylesheet", s);
-
         Viewer v = graph.display();
         try {
             TimeUnit.SECONDS.sleep(1);
@@ -72,8 +76,30 @@ public class RelationshipBuilder {
             Logger.getLogger(RelationshipBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
         //  v.disableAutoLayout();
-
     }
 
-    public static 
+    public static void displayGraph(Paper paper) {
+        graph = new MultiGraph("", false, true);
+        processPaper(paper);
+        initGraph();
+    }
+
+    public static void displayGraph() {
+        graph = new MultiGraph("", false, true);
+        for (Paper p : PapersManager.getPapers()) {
+            processPaper(p);
+        }
+        initGraph();
+    }
+
+    private static void processPaper(Paper paper) {
+        if (!graph.getNodeSet().contains(paper)) {
+            graph.addNode(paper.getTitle());
+        }
+        for (Paper p : paper.getReferences()) {
+            processPaper(p);
+            graph.addEdge("", paper.getTitle(), p.getTitle());
+        }
+    }
+
 }

@@ -2,8 +2,6 @@ package MainPackage;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
 
 public class Paper implements Serializable {
 
@@ -11,9 +9,19 @@ public class Paper implements Serializable {
     private ArrayList<Note> notes = new ArrayList<>();
     private String rating;
     private String author;
-    private String enteryType;
+    private String entryType;
     private String category;
     private String keywords;
+    private Bibtex bibtex;
+    private ArrayList<Paper> references = new ArrayList<>();
+
+    public ArrayList<Paper> getReferences() {
+        return references;
+    }
+
+    public Bibtex getBibtex() {
+        return bibtex;
+    }
 
     public String getKeywords() {
         return keywords;
@@ -26,8 +34,8 @@ public class Paper implements Serializable {
     public String getCategory() {
         return category;
     }
-    
-    public void modifyNote(int index,String title,String category,String content,String keywords){
+
+    public void modifyNote(int index, String title, String category, String content, String keywords) {
         Note tmp = notes.get(index);
         tmp.setCategory(category);
         tmp.setContent(content);
@@ -101,7 +109,6 @@ public class Paper implements Serializable {
 //            keywords.add(sc.next());
 //        }
 //    }
-
     public String getTitle() {
         return title;
     }
@@ -129,7 +136,7 @@ public class Paper implements Serializable {
     public String[] getTableArray() {
         String[] paperArray = new String[8];
         paperArray[0] = "";
-        paperArray[1] = enteryType;
+        paperArray[1] = entryType;
         paperArray[2] = author;
         paperArray[3] = title;
         paperArray[4] = rating;

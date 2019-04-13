@@ -76,7 +76,7 @@ public class PaperBuilder {
 
     public static Paper buildPaper(File exportedFille) {
         tmp = null;
-        System.out.println("MainPackage.PaperBuilder.buildPaper(): file:" + file.exists());
+        //System.out.println("MainPackage.PaperBuilder.buildPaper(): file:" + file.exists());
         file = exportedFille;
         if (verifyFile(file)) {
             tmp = new Paper();
@@ -91,7 +91,7 @@ public class PaperBuilder {
 
     }
 
-    private static boolean verifyFile(File file) {
+    public static boolean verifyFile(File file) {
         System.out.println("Verfying File : " + file.getAbsolutePath() + "  " + file.exists());
 
         String extension = "";
@@ -139,59 +139,54 @@ public class PaperBuilder {
         System.out.println("Creator=" + info.getCreator());
         System.out.println("Producer=" + info.getProducer());
         System.out.println("Creation Date=" + info.getCreationDate());
-      
-        
+
         System.out.println("Trapped=" + info.getTrapped());
         System.out.println(info.getMetadataKeys().toString());
     }
 
-    public static void RenameFile(File file) {
+    public static void renameFile(File file) {
 
         PDDocument doc = null;
         tmp = new Paper();
         if (verifyFile(file)) {
             try {
                 doc = PDDocument.load(file);
-             
 
-            PDDocumentInformation info = doc.getDocumentInformation();
-            System.out.println("Page Count=" + doc.getNumberOfPages());
-            if (info.getTitle() != null) {
-                tmp.setTitle(info.getTitle());
-            }
-            if (info.getAuthor() != null) {
-                tmp.setAuthor(info.getAuthor());
-            }
-            if (info.getSubject() != null) {
-                tmp.setCategory(info.getSubject());
-            }
-            if (info.getKeywords() != null) {
-                tmp.setKeywords(info.getKeywords());
-            }
-            System.out.println("Creator=" + info.getCreator());
-            System.out.println("Producer=" + info.getProducer());
-            System.out.println("Creation Date=" + info.getCreationDate());
-          if (info.getCreationDate()!= null) {
-            if (info.getCreationDate().getCalendarType() != null) {
-                
-                 DateFormat dateFormat = new SimpleDateFormat("yyyy'/'MM'/'d");  
-                String strDate = dateFormat.format(info.getCreationDate().getTime());  
-                tmp.setDate(strDate);
-                System.out.println("XXXXXXXXXXXXXXXXXXXXX" );
-            }
-        }   System.out.println("Key Words"+info.getKeywords());
-            System.out.println("Trapped=" + info.getTrapped());
-            System.out.println(info.getMetadataKeys().toString());
-             doc.close();
-        }
-             
-            
-        catch (IOException ex) {
+                PDDocumentInformation info = doc.getDocumentInformation();
+                System.out.println("Page Count=" + doc.getNumberOfPages());
+                if (info.getTitle() != null) {
+                    tmp.setTitle(info.getTitle());
+                }
+                if (info.getAuthor() != null) {
+                    tmp.setAuthor(info.getAuthor());
+                }
+                if (info.getSubject() != null) {
+                    tmp.setCategory(info.getSubject());
+                }
+                if (info.getKeywords() != null) {
+                    tmp.setKeywords(info.getKeywords());
+                }
+                System.out.println("Creator=" + info.getCreator());
+                System.out.println("Producer=" + info.getProducer());
+                System.out.println("Creation Date=" + info.getCreationDate());
+                if (info.getCreationDate() != null) {
+                    if (info.getCreationDate().getCalendarType() != null) {
+
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy'/'MM'/'d");
+                        String strDate = dateFormat.format(info.getCreationDate().getTime());
+                        tmp.setDate(strDate);
+                        System.out.println("XXXXXXXXXXXXXXXXXXXXX");
+                    }
+                }
+                System.out.println("Key Words" + info.getKeywords());
+                System.out.println("Trapped=" + info.getTrapped());
+                System.out.println(info.getMetadataKeys().toString());
+                doc.close();
+            } catch (IOException ex) {
                 Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
             }
-      
 
-    }
+        }
     }
 
     public static void saveFile() {
