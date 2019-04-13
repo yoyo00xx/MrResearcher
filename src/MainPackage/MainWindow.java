@@ -15,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -75,7 +74,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         dm = (DefaultTableModel) jTable1.getModel();
         dm.setRowCount(0);
         int i = 0;
-        for (Paper paper : PapersManager.papers) {
+        for (Paper paper : PapersManager.getPapers()) {
             String[] array = paper.getTableArray();
             array[0] = i + "";
 
@@ -100,9 +99,9 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
                     bibFields.setVisible(true);
                     PaperBuilder.RenameFile(file);
                     System.out.println(".run()XXXXXXXXXXXXXXXX");
-                     bibFields.getTvAuthor().setText(PaperBuilder.getTmp().getAuthor());
-                     bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
-                     bibFields.getTvCategory().setText(PaperBuilder.getTmp().getCategory());
+                    bibFields.getTvAuthor().setText(PaperBuilder.getTmp().getAuthor());
+                    bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
+                    bibFields.getTvCategory().setText(PaperBuilder.getTmp().getCategory());
                     bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
                     bibFields.getJButton().addActionListener(new BibTexButtonListener());
                     bibFields.getTvTittle().setText(file.getName());
@@ -125,22 +124,21 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
         @Override
         public void actionPerformed(ActionEvent e) {
-             
+
             System.out.println("MainPackage.MainWindow.BibTexButtonListener.actionPerformed() Save Button Clicked");
 
             PaperBuilder.setFile(files[fileIndexCnt]);
             PaperBuilder.setNewFileName(bibFields.getTvTittle().getText());
-           
+
             Paper paper = PaperBuilder.buildPaper(files[fileIndexCnt]);
-            if(paper != null){
-            PapersManager.getPapers().add(PaperBuilder.buildPaper(files[fileIndexCnt]));
-            populateUI();
-            bibFields.dispose();
-            fileIndexCnt++;
-            }
-            else{
-             bibFields.dispose();
-            JOptionPane.showMessageDialog(jTable1, "Please Enter a PDF File");
+            if (paper != null) {
+                PapersManager.getPapers().add(PaperBuilder.buildPaper(files[fileIndexCnt]));
+                populateUI();
+                bibFields.dispose();
+                fileIndexCnt++;
+            } else {
+                bibFields.dispose();
+                JOptionPane.showMessageDialog(jTable1, "Please Enter a PDF File");
             }
 
         }
@@ -178,7 +176,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
         jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Magic Square Game");
+        setTitle("Mr Researcher");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -429,7 +427,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        PapersManager.papers.remove(index);
+        PapersManager.getPapers().remove(index);
 
         populateUI();
 
@@ -437,23 +435,23 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        Paper paper = PapersManager.papers.get(index);
+        Paper paper = PapersManager.getPapers().get(index);
         openPaper(paper);
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        int index = Integer.parseInt((String)jTable1.getValueAt(jTable1.getSelectedRow(), 0));
-        Paper paper = PapersManager.papers.get(index);
+        int index = Integer.parseInt((String) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+        Paper paper = PapersManager.getPapers().get(index);
         NotesWindow x = new NotesWindow(paper);
         x.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-       
-        
+
         x.setVisible(true);
-       
+
     }//GEN-LAST:event_jButton3ActionPerformed
-    public void openPaper(Paper paper){
-      if(!Desktop.isDesktopSupported()){
+
+    public void openPaper(Paper paper) {
+        if (!Desktop.isDesktopSupported()) {
             System.out.println("Desktop is not supported");
             JOptionPane.showMessageDialog(this, "Error Desktop not supported");
             return;
