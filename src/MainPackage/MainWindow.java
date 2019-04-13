@@ -35,7 +35,7 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
     /**
      * Creates new form gameWindow
      */
-    ArrayList<BebTexFields> bibFields = new ArrayList<BebTexFields>();
+    BebTexFields bibFields = new BebTexFields();
     public static PaperBuilder paperBuilder;
     public File[] files;
     public static int fileIndexCnt;
@@ -96,11 +96,17 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
                 fileIndexCnt = 0;
                 for (File file : files) {
-                    bibFields.add(fileIndexCnt, new BebTexFields());
-                    bibFields.get(fileIndexCnt).setVisible(true);
-                    bibFields.get(fileIndexCnt).getJButton().addActionListener(new BibTexButtonListener());
-                    bibFields.get(fileIndexCnt).getTvTittle().setText(file.getName());
-                    bibFields.get(fileIndexCnt).setTitle(file.getName());
+                    bibFields = new BebTexFields();
+                    bibFields.setVisible(true);
+                    PaperBuilder.RenameFile(file);
+                    System.out.println(".run()XXXXXXXXXXXXXXXX");
+                     bibFields.getTvAuthor().setText(PaperBuilder.getTmp().getAuthor());
+                     bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
+                     bibFields.getTvCategory().setText(PaperBuilder.getTmp().getCategory());
+                    bibFields.getTvYear().setText(PaperBuilder.getTmp().getDate());
+                    bibFields.getJButton().addActionListener(new BibTexButtonListener());
+                    bibFields.getTvTittle().setText(file.getName());
+                    bibFields.setTitle(file.getName());
 
                     PaperBuilder.setFile(file);
                     System.out.println(file.getAbsoluteFile() + " file exist=" + file.exists());
@@ -119,20 +125,21 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+             
             System.out.println("MainPackage.MainWindow.BibTexButtonListener.actionPerformed() Save Button Clicked");
 
             PaperBuilder.setFile(files[fileIndexCnt]);
-            PaperBuilder.setNewFileName(bibFields.get(fileIndexCnt).getTvTittle().getText());
+            PaperBuilder.setNewFileName(bibFields.getTvTittle().getText());
+           
             Paper paper = PaperBuilder.buildPaper(files[fileIndexCnt]);
             if(paper != null){
             PapersManager.getPapers().add(PaperBuilder.buildPaper(files[fileIndexCnt]));
             populateUI();
-            bibFields.get(fileIndexCnt).dispose();
+            bibFields.dispose();
             fileIndexCnt++;
             }
             else{
-             bibFields.get(fileIndexCnt).dispose();
+             bibFields.dispose();
             JOptionPane.showMessageDialog(jTable1, "Please Enter a PDF File");
             }
 

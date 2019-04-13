@@ -28,34 +28,14 @@ public class PaperBuilder {
     public static void testPdfBox() {
         file = new File(PAPERS_DIRECTORY + "Advanced_Lectures_on_Machine_Learning_ML_Summer_Sc.pdf");
         System.out.println(file.exists());
-        PDDocument doc = null;
-        
-        
-        try {
-            doc = PDDocument.load(file);
-        } catch (IOException ex) {
-            Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        PDDocumentInformation info = doc.getDocumentInformation();
-        System.out.println("Page Count=" + doc.getNumberOfPages());
-       tmp.setTitle(info.getTitle());
-        tmp.setAuthor(info.getAuthor());
-        tmp.setCategory(info.getSubject());
-        tmp.setKeywords(info.getKeywords());
-        System.out.println("Creator=" + info.getCreator());
-        System.out.println("Producer=" + info.getProducer());
-        System.out.println("Creation Date=" + info.getCreationDate());
-        tmp.setDate(info.getModificationDate().getCalendarType());
-        System.out.println("Trapped=" + info.getTrapped());
-        System.out.println(info.getMetadataKeys().toString());
+       
     }
 
-    public Paper getTmp() {
+    public static Paper getTmp() {
         return tmp;
     }
 
-    public void setTmp(Paper tmp) {
+    public   void setTmp(Paper tmp) {
         this.tmp = tmp;
     }
 
@@ -113,7 +93,7 @@ public class PaperBuilder {
         return false;
     }
 
-    private static void RenameFile() {
+    public static void RenameFile() {
          
         PDDocument doc = null;
         
@@ -126,14 +106,46 @@ public class PaperBuilder {
         
         PDDocumentInformation info = doc.getDocumentInformation();
         System.out.println("Page Count=" + doc.getNumberOfPages());
-        System.out.println("Title=" + info.getTitle());
-        System.out.println("Author=" + info.getAuthor());
-        System.out.println("Subject=" + info.getSubject());
-        System.out.println("Keywords=" + info.getKeywords());
+       tmp.setTitle(info.getTitle());
+        tmp.setAuthor(info.getAuthor());
+        tmp.setCategory(info.getSubject());
+        tmp.setKeywords(info.getKeywords());
         System.out.println("Creator=" + info.getCreator());
         System.out.println("Producer=" + info.getProducer());
         System.out.println("Creation Date=" + info.getCreationDate());
-        System.out.println("Modification Date=" + info.getModificationDate());
+        tmp.setDate(info.getModificationDate().getCalendarType());
+        System.out.println("XXXXXXXXXXXXXXXXXXXXX"+tmp.getDate());
+        System.out.println("Trapped=" + info.getTrapped());
+        System.out.println(info.getMetadataKeys().toString());
+
+    }
+      public static void RenameFile(File file) {
+         
+        PDDocument doc = null;
+        tmp = new Paper();
+        
+        try {
+            doc = PDDocument.load(file);
+        } catch (IOException ex) {
+            Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        PDDocumentInformation info = doc.getDocumentInformation();
+        System.out.println("Page Count=" + doc.getNumberOfPages());
+        if(info.getTitle()!= null)
+       tmp.setTitle(info.getTitle());
+        if(info.getAuthor()!= null)
+        tmp.setAuthor(info.getAuthor());
+        if(info.getSubject()!= null)
+        tmp.setCategory(info.getSubject());
+        if(info.getKeywords()!= null)
+        tmp.setKeywords(info.getKeywords());
+        System.out.println("Creator=" + info.getCreator());
+        System.out.println("Producer=" + info.getProducer());
+        System.out.println("Creation Date=" + info.getCreationDate());
+        if(info.getModificationDate().getCalendarType()!= null)
+        tmp.setDate(info.getModificationDate().getCalendarType());
+        System.out.println("XXXXXXXXXXXXXXXXXXXXX"+tmp.getDate());
         System.out.println("Trapped=" + info.getTrapped());
         System.out.println(info.getMetadataKeys().toString());
 
