@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
-import org.apache.pdfbox.util.filetypedetector.FileTypeDetector;
 
 public class PaperBuilder {
 
@@ -21,25 +20,23 @@ public class PaperBuilder {
     public static void main(String[] args) {
 
         //testPdfBox();
-      // RenameFile();
-            
+        // RenameFile();
     }
 
     public static void testPdfBox() {
         file = new File(PAPERS_DIRECTORY + "Advanced_Lectures_on_Machine_Learning_ML_Summer_Sc.pdf");
         System.out.println(file.exists());
         PDDocument doc = null;
-        
-        
+
         try {
             doc = PDDocument.load(file);
         } catch (IOException ex) {
             Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         PDDocumentInformation info = doc.getDocumentInformation();
         System.out.println("Page Count=" + doc.getNumberOfPages());
-       tmp.setTitle(info.getTitle());
+        tmp.setTitle(info.getTitle());
         tmp.setAuthor(info.getAuthor());
         tmp.setCategory(info.getSubject());
         tmp.setKeywords(info.getKeywords());
@@ -83,10 +80,10 @@ public class PaperBuilder {
             tmp = new Paper();
             RenameFile();
             saveFile();
-                    
-        tmp.setTitle(newFileName.substring(0, newFileName.lastIndexOf(".")));
-        tmp.setAbsolutePath(file.getAbsolutePath());
-        return tmp;
+
+            tmp.setTitle(newFileName.substring(0, newFileName.lastIndexOf(".")));
+            tmp.setAbsolutePath(file.getAbsolutePath());
+            return tmp;
         }
         return null;
 
@@ -114,16 +111,15 @@ public class PaperBuilder {
     }
 
     private static void RenameFile() {
-         
+
         PDDocument doc = null;
-        
-        
+
         try {
             doc = PDDocument.load(file);
         } catch (IOException ex) {
             Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         PDDocumentInformation info = doc.getDocumentInformation();
         System.out.println("Page Count=" + doc.getNumberOfPages());
         System.out.println("Title=" + info.getTitle());
@@ -144,20 +140,6 @@ public class PaperBuilder {
         if (!newFileName.substring(newFileName.length() - 4).equalsIgnoreCase(".pdf")) {
             newFileName = newFileName.concat(".pdf");
         }
-
-//                try {
-//            FileInputStream fs = new FileInputStream(file.getAbsolutePath());
-//
-//            FileOutputStream os = new FileOutputStream(PAPERS_DIRECTORY+newFileName);
-//            int b;
-//            while ((b = fs.read()) != -1) {
-//            os.write(b);
-//            }
-//            os.close();
-//            fs.close();
-//        } catch (Exception E) {
-//            E.printStackTrace();
-//        }
         Path path = Paths.get(PAPERS_DIRECTORY + newFileName);
         try {
             Files.copy(file.toPath(), path);
