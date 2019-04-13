@@ -21,11 +21,10 @@ public class TestClass {
        public static void main(String[] args) 
     {
         
-           try {
-               String qTittle,qYear;
-               Document doc = Jsoup.connect("https://liinwww.ira.uka.de/csbib/?query=Verified+AIG+Algorithms+in+ACL2&field=&year=&since=&before=&results=bibtex&maxnum=40&sort=score").get();
-              
-               String bibs = doc.body().text();
+      
+               
+              String qTitle="Verified+AIG+Algorithms+in+ACL2&field";
+              String bibs = sendQuery(qTitle);
                System.out.println(bibs);
                
               
@@ -43,10 +42,21 @@ public class TestClass {
 //               System.out.println(entryToDelmiter+"\n");
 //           }
            
+           
+    }
+       
+       public static String sendQuery(String tittle){
+       
+           try {
+               Document doc = Jsoup.connect("https://liinwww.ira.uka.de/csbib/?query="+tittle+"=&year=&since=&before=&results=bibtex&maxnum=40&sort=score").get();
+               
+               String bibs = doc.body().text();
+               return bibs;
            } catch (IOException ex) {
                Logger.getLogger(TestClass.class.getName()).log(Level.SEVERE, null, ex);
            }
-    }
+           return null;
+       }
        public static  String parsBibs(String bibs){
        
        bibs.indexOf("is", bibs.indexOf("is") + 1);
@@ -61,14 +71,20 @@ public class TestClass {
            Scanner scan = new Scanner(parsedString);
             scan.useDelimiter("\"|,");
            scan.next();
-          
+           boolean isSkipped = false;
            int i=0;
            while(scan.hasNext()){
+               
+             
                String entryLine = scan.next();
-               String entry = entryLine.substring(3, entryLine.indexOf("="));
+               String  entry = entryLine.substring(3, entryLine.indexOf("=")-1);
                String entryValue = scan.next();
                scan.next();
-               System.out.println(i+"- Entry:"+entry+" Entry Value: "+entryValue);
+               
+              if(entry.equals("abstract"))
+                  break;
+               
+               System.out.println(i+"-Entry:"+entry+"Entry Value: "+entryValue);
              //  String entryLine = scan.next();
              
               // String entry = getFirstWord(entryLine);
@@ -86,7 +102,7 @@ public class TestClass {
                     bibfields.getTvJournal().setText(entryValue);            
                }
                if(entry.equals("year")){
-                    bibfields.getTvYear().setText(bibfields.getTvYear().getText()+" -->"+entryValue);
+                    bibfields.getTvYear().setText(bibfields.getTvYear().getText()+" From BibTex:"+entryValue);
                }
 //               if(entry.equals("month")){
 //                    bibfields.getTv().setText(entryValue);
