@@ -130,15 +130,11 @@ public class MainWindow extends javax.swing.JFrame implements KeyListener, Focus
             PaperBuilder.setNewFileName(bibFields.getTvTittle().getText());
 
             Paper paper = PaperBuilder.buildPaper(files[fileIndexCnt]);
-            if (paper != null) {
-                PapersManager.getPapers().add(PaperBuilder.buildPaper(files[fileIndexCnt]));
-                populateUI();
-                bibFields.dispose();
-                fileIndexCnt++;
-            } else {
-                bibFields.dispose();
-                JOptionPane.showMessageDialog(jTable1, "Please Enter a PDF File");
-            }
+
+            PapersManager.getPapers().add(PaperBuilder.buildPaper(files[fileIndexCnt]));
+            populateUI();
+            bibFields.dispose();
+            fileIndexCnt++;
 
         }
 
