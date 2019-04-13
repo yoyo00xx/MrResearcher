@@ -18,13 +18,14 @@ import javax.swing.table.TableRowSorter;
 public class NotesWindow extends javax.swing.JFrame {
     AddNoteButtonListener listener;
     private NoteAdd noteAddJframe;
+    
     // TODO REMOVE STATIC INNIT
     private Paper paper ;    
     public NotesWindow(Paper paper){
     this.paper = paper;
       initComponents();
         createColumns();
-        creatTestNotes();
+        
         populateNotes();
         
         sorter = new TableRowSorter<DefaultTableModel>(dm);
@@ -34,11 +35,7 @@ public class NotesWindow extends javax.swing.JFrame {
     
      DefaultTableModel dm;
      TableRowSorter<DefaultTableModel> sorter;
-     private void creatTestNotes(){
-         System.out.println("MainPackage.NotesWindow.creatTestNotes() PAPER IS"+paper.getTitle());
-     paper.getNotes().add(new Note("Tittle of This Paper", "Science", "dlakjdasldkjasldksjdslakdjsaldksjdsalkdjasdlkadjasldkjsadlkdjasldkajsdlksjdsalkdja"));
-     paper.getNotes().add(new Note("Tittle2 of This Paper", "Science", "dlakjdasldkjasldksjdslakdjsaldksjdsalkdjasdlkadjasldkjsadlkdjasldkajsdlksjdsalkdja"));
-         }
+
     private void createColumns() {
         dm = (DefaultTableModel) jTable1.getModel();
         String[] columns = {"#", "Title", "Category", "Date Modified"};
@@ -82,7 +79,7 @@ public class NotesWindow extends javax.swing.JFrame {
         
         initComponents();
         createColumns();
-        creatTestNotes();
+
         populateNotes();
         
         sorter = new TableRowSorter<DefaultTableModel>(dm);
@@ -104,8 +101,13 @@ public class NotesWindow extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Note Manager");
+        setResizable(false);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel()
+            {public boolean isCellEditable(int row, int column){return false;}}
+        );
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Delete");
@@ -134,25 +136,24 @@ public class NotesWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addGap(80, 80, 80))))
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton2)
+                .addGap(102, 102, 102))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -161,6 +162,7 @@ public class NotesWindow extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -201,6 +203,7 @@ public class NotesWindow extends javax.swing.JFrame {
             noteAddJframe.dispose();
             populateNotes();
             System.out.println("XXXXXXXXXXXXXXXXXXXX Edit Notes Performed");
+            MainWindow.changed = true;
             
         }
     
@@ -215,6 +218,7 @@ public class NotesWindow extends javax.swing.JFrame {
             noteAddJframe.dispose();
             populateNotes();
             System.out.println("XXXXXXXXXXXXXXXXXXXX Add Notes Performed");
+            MainWindow.changed = true;
             
         }
     

@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 public class PapersManager implements Serializable {
 
-    private static ArrayList<Paper> papers = new ArrayList<>();
+    static ArrayList<Paper> papers = new ArrayList<>();
 
     public static void main(String[] args) {
 

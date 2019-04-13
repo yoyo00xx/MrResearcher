@@ -15,78 +15,6 @@ import javax.swing.JTextField;
  * @author st201518650
  */
 public class BebTexFields extends javax.swing.JFrame {
-
-    public JTextField getTvURL() {
-        return tvURL;
-    }
-
-    public void setTvURL(JTextField tvURL) {
-        this.tvURL = tvURL;
-    }
-
-    public JTextField getTvAddress() {
-        return tvAddress;
-    }
-
-    public void setTvAddress(JTextField tvAddress) {
-        this.tvAddress = tvAddress;
-    }
-
-    public JTextField getTvBibDate() {
-        return tvBibDate;
-    }
-
-    public void setTvBibDate(JTextField tvBibDate) {
-        this.tvBibDate = tvBibDate;
-    }
-
-    public JTextField getTvInstit() {
-        return tvInstit;
-    }
-
-    public void setTvInstit(JTextField tvInstit) {
-        this.tvInstit = tvInstit;
-    }
-
-    public JTextField getTvJournal() {
-        return tvJournal;
-    }
-
-    public void setTvJournal(JTextField tvJournal) {
-        this.tvJournal = tvJournal;
-    }
-
-    public JTextField getTvKeywords() {
-        return tvKeywords;
-    }
-
-    public void setTvKeywords(JTextField tvKeywords) {
-        this.tvKeywords = tvKeywords;
-    }
-
-    public JTextField getTvNumber() {
-        return tvNumber;
-    }
-
-    public void setTvNumber(JTextField tvNumber) {
-        this.tvNumber = tvNumber;
-    }
-
-    public JTextField getTvPages() {
-        return tvPages;
-    }
-
-    public void setTvPages(JTextField tvPages) {
-        this.tvPages = tvPages;
-    }
-
-    public JTextField getTvVolume() {
-        return tvVolume;
-    }
-
-    public void setTvVolume(JTextField tvVolume) {
-        this.tvVolume = tvVolume;
-    }
         public boolean isDone = false;
         public File file;
     /**
@@ -115,37 +43,37 @@ public class BebTexFields extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         tvEdition = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        tvBibDate = new javax.swing.JTextField();
+        tvEditor = new javax.swing.JTextField();
         tvAuthor = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tvURL = new javax.swing.JTextField();
+        TvPublisher = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        tvKeywords = new javax.swing.JTextField();
+        jTextField18 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
-        tvNumber = new javax.swing.JTextField();
+        jTextField22 = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        tvAddress = new javax.swing.JTextField();
+        jTextField23 = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
-        tvInstit = new javax.swing.JTextField();
-        tvJournal = new javax.swing.JTextField();
+        jTextField24 = new javax.swing.JTextField();
+        jTextField25 = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         tvCategory = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        tvPages = new javax.swing.JTextField();
+        jTextField28 = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
-        tvVolume = new javax.swing.JTextField();
+        jTextField29 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setText("Title*");
 
         jLabel3.setText("Publisher*");
 
-        jLabel4.setText("Date*");
+        jLabel4.setText("Year*");
 
         jLabel5.setText("Edition");
 
@@ -153,15 +81,15 @@ public class BebTexFields extends javax.swing.JFrame {
 
         jLabel7.setText("Author*");
 
-        jLabel8.setText("Bib Date*");
+        jLabel8.setText("Editor*");
 
-        jLabel11.setText("URL");
+        jLabel11.setText("Publisher");
 
         jLabel17.setText("Keywords");
 
         jLabel21.setText("Address");
 
-        jLabel23.setText("Number");
+        jLabel23.setText("Crossref");
 
         jLabel24.setText("Journal");
 
@@ -169,11 +97,11 @@ public class BebTexFields extends javax.swing.JFrame {
 
         jLabel27.setText("Category");
 
-        jLabel28.setText("Pages");
+        jLabel28.setText("Series");
 
-        jLabel29.setText("Volume");
+        jLabel29.setText("Chapter");
 
-        jButton1.setText("Apply Changes");
+        jButton1.setText("Apply");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jButton1MousePressed(evt);
@@ -195,7 +123,7 @@ public class BebTexFields extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(18, 18, 18)
-                        .addComponent(tvURL, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(TvPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -207,7 +135,7 @@ public class BebTexFields extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(18, 18, 18)
-                        .addComponent(tvBibDate, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tvEditor, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
@@ -229,31 +157,31 @@ public class BebTexFields extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addGap(18, 18, 18)
-                        .addComponent(tvKeywords, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel21)
                         .addGap(18, 18, 18)
-                        .addComponent(tvAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel23)
                         .addGap(18, 18, 18)
-                        .addComponent(tvNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addGap(18, 18, 18)
-                        .addComponent(tvInstit, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel24)
                         .addGap(18, 18, 18)
-                        .addComponent(tvJournal, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel29)
                         .addGap(18, 18, 18)
-                        .addComponent(tvVolume, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField29, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel28)
                         .addGap(18, 18, 18)
-                        .addComponent(tvPages, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel27)
                         .addGap(18, 18, 18)
@@ -276,31 +204,31 @@ public class BebTexFields extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel28)
-                            .addComponent(tvPages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel29)
-                            .addComponent(tvVolume, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel24)
-                            .addComponent(tvJournal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel25)
-                            .addComponent(tvInstit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
-                            .addComponent(tvNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel21)
-                            .addComponent(tvAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextField23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel17)
-                            .addComponent(tvKeywords, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -320,7 +248,7 @@ public class BebTexFields extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(tvBibDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tvEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
@@ -332,13 +260,14 @@ public class BebTexFields extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(tvURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(TvPublisher, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
@@ -398,6 +327,7 @@ public class BebTexFields extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TvPublisher;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
@@ -415,21 +345,20 @@ public class BebTexFields extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField tvAddress;
+    private javax.swing.JTextField jTextField18;
+    private javax.swing.JTextField jTextField22;
+    private javax.swing.JTextField jTextField23;
+    private javax.swing.JTextField jTextField24;
+    private javax.swing.JTextField jTextField25;
+    private javax.swing.JTextField jTextField28;
+    private javax.swing.JTextField jTextField29;
     private javax.swing.JTextField tvAuthor;
-    private javax.swing.JTextField tvBibDate;
     private javax.swing.JTextField tvCategory;
     private javax.swing.JTextField tvEdition;
+    private javax.swing.JTextField tvEditor;
     private javax.swing.JTextField tvEntryType;
-    private javax.swing.JTextField tvInstit;
-    private javax.swing.JTextField tvJournal;
-    private javax.swing.JTextField tvKeywords;
-    private javax.swing.JTextField tvNumber;
-    private javax.swing.JTextField tvPages;
     private javax.swing.JTextField tvPublisher;
     private javax.swing.JTextField tvTittle;
-    private javax.swing.JTextField tvURL;
-    private javax.swing.JTextField tvVolume;
     private javax.swing.JTextField tvYear;
     // End of variables declaration//GEN-END:variables
     public JButton getJButton(){
@@ -462,11 +391,11 @@ public class BebTexFields extends javax.swing.JFrame {
     }
 
     public JTextField getTvEditor() {
-        return tvBibDate;
+        return tvEditor;
     }
 
     public void setTvEditor(JTextField tvEditor) {
-        this.tvBibDate = tvEditor;
+        this.tvEditor = tvEditor;
     }
 
     public JTextField getTvEntryType() {
