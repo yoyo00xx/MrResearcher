@@ -13,6 +13,15 @@ public class Paper implements Serializable {
     private String author;
     private String enteryType;
     private String category;
+    private String keywords;
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
+    }
 
     public String getCategory() {
         return category;
@@ -39,7 +48,7 @@ public class Paper implements Serializable {
     public void setAbsolutePath(String absolutePath) {
         this.absolutePath = absolutePath;
     }
-    private HashSet<String> keywords = new HashSet<>();
+//    private HashSet<String> keywords = new HashSet<>();
 
     public Paper() {
     }
@@ -49,8 +58,8 @@ public class Paper implements Serializable {
         this.rating = rating;
         this.author = author;
         this.dateAdded = dateAdded;
-        addKeywords(title);
-        addKeywords(author);
+//        addKeywords(title);
+//        addKeywords(author);
 
     }
 
@@ -75,23 +84,23 @@ public class Paper implements Serializable {
         this.dateAdded = date;
     }
 
-    public HashSet getKeywords() {
-        return keywords;
-    }
-
-    public void removeKeywords(String words) {
-        Scanner sc = new Scanner(words);
-        while (sc.hasNext()) {
-            keywords.remove(sc.next());
-        }
-    }
-
-    public void addKeywords(String words) {
-        Scanner sc = new Scanner(words);
-        while (sc.hasNext()) {
-            keywords.add(sc.next());
-        }
-    }
+//    public HashSet getKeywords() {
+//        return keywords;
+//    }
+//
+//    public void removeKeywords(String words) {
+//        Scanner sc = new Scanner(words);
+//        while (sc.hasNext()) {
+//            keywords.remove(sc.next());
+//        }
+//    }
+//
+//    public void addKeywords(String words) {
+//        Scanner sc = new Scanner(words);
+//        while (sc.hasNext()) {
+//            keywords.add(sc.next());
+//        }
+//    }
 
     public String getTitle() {
         return title;

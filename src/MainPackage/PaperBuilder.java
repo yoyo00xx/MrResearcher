@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.util.filetypedetector.FileTypeDetector;
 
 public class PaperBuilder {
 
@@ -19,28 +20,35 @@ public class PaperBuilder {
 
     public static void main(String[] args) {
 
-        file = new File(PAPERS_DIRECTORY + "p.pdf");
+        //testPdfBox();
+      // RenameFile();
+            
+    }
+
+    public static void testPdfBox() {
+        file = new File(PAPERS_DIRECTORY + "Advanced_Lectures_on_Machine_Learning_ML_Summer_Sc.pdf");
         System.out.println(file.exists());
         PDDocument doc = null;
+        
+        
         try {
             doc = PDDocument.load(file);
         } catch (IOException ex) {
             Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         PDDocumentInformation info = doc.getDocumentInformation();
         System.out.println("Page Count=" + doc.getNumberOfPages());
-        System.out.println("Title=" + info.getTitle());
-        System.out.println("Author=" + info.getAuthor());
-        System.out.println("Subject=" + info.getSubject());
-        System.out.println("Keywords=" + info.getKeywords());
+       tmp.setTitle(info.getTitle());
+        tmp.setAuthor(info.getAuthor());
+        tmp.setCategory(info.getSubject());
+        tmp.setKeywords(info.getKeywords());
         System.out.println("Creator=" + info.getCreator());
         System.out.println("Producer=" + info.getProducer());
         System.out.println("Creation Date=" + info.getCreationDate());
-        System.out.println("Modification Date=" + info.getModificationDate());
+        tmp.setDate(info.getModificationDate().getCalendarType());
         System.out.println("Trapped=" + info.getTrapped());
         System.out.println(info.getMetadataKeys().toString());
-
     }
 
     public Paper getTmp() {
@@ -72,13 +80,16 @@ public class PaperBuilder {
         System.out.println("MainPackage.PaperBuilder.buildPaper(): file:" + file.exists());
         file = exportedFille;
         if (verifyFile(file)) {
+            tmp = new Paper();
             RenameFile();
             saveFile();
-        }
-        tmp = new Paper();
+                    
         tmp.setTitle(newFileName.substring(0, newFileName.lastIndexOf(".")));
         tmp.setAbsolutePath(file.getAbsolutePath());
         return tmp;
+        }
+        return null;
+
     }
 
     private static boolean verifyFile(File file) {
@@ -103,6 +114,28 @@ public class PaperBuilder {
     }
 
     private static void RenameFile() {
+         
+        PDDocument doc = null;
+        
+        
+        try {
+            doc = PDDocument.load(file);
+        } catch (IOException ex) {
+            Logger.getLogger(PaperBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        PDDocumentInformation info = doc.getDocumentInformation();
+        System.out.println("Page Count=" + doc.getNumberOfPages());
+        System.out.println("Title=" + info.getTitle());
+        System.out.println("Author=" + info.getAuthor());
+        System.out.println("Subject=" + info.getSubject());
+        System.out.println("Keywords=" + info.getKeywords());
+        System.out.println("Creator=" + info.getCreator());
+        System.out.println("Producer=" + info.getProducer());
+        System.out.println("Creation Date=" + info.getCreationDate());
+        System.out.println("Modification Date=" + info.getModificationDate());
+        System.out.println("Trapped=" + info.getTrapped());
+        System.out.println(info.getMetadataKeys().toString());
 
     }
 
